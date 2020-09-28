@@ -1,0 +1,22 @@
+{
+  "name": "realtime_messenger",
+  "version": "1.0.0",
+  "description": "Real-time Messenger",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trieuphong99/realtime_messenger.git"
+  },
+  "author": "Stormalic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trieuphong99/realtime_messenger/issues"
+  },
+  "homepage": "https://github.com/trieuphong99/realtime_messenger#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
