@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/trieuphong99/realtime_messenger#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "bluebird": "^3.5.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
