@@ -1,7 +1,8 @@
 import express from "express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
-import initRoutes from "./routes/api"
+import initRoutes from "./routes/api";
+import bodyParser from "body-parser";
 
 let app = express();
 
@@ -11,6 +12,8 @@ ConnectDB();
 /* config view engine */
 configViewEngine(app);
 
+/* enable body parser */
+app.use(bodyParser.urlencoded({extended: true}));
 /* init all routes */
 initRoutes(app);
 
