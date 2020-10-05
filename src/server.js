@@ -3,17 +3,24 @@ import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
 import initRoutes from "./routes/api";
 import bodyParser from "body-parser";
+import connectFlash from "connect-flash";
+import configSession from "./config/session";
 
 let app = express();
 
 /* connect to mongoDB */
 ConnectDB();
+configSession(app);
 
 /* config view engine */
 configViewEngine(app);
 
 /* enable body parser */
 app.use(bodyParser.urlencoded({extended: true}));
+
+/* enable flash message */
+app.use(connectFlash);
+
 /* init all routes */
 initRoutes(app);
 
