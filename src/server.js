@@ -10,6 +10,8 @@ let app = express();
 
 /* connect to mongoDB */
 ConnectDB();
+
+/* config session */
 configSession(app);
 
 /* config view engine */
@@ -19,7 +21,7 @@ configViewEngine(app);
 app.use(bodyParser.urlencoded({extended: true}));
 
 /* enable flash message */
-app.use(connectFlash);
+app.use(connectFlash());
 
 /* init all routes */
 initRoutes(app);
