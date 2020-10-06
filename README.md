@@ -1,6 +1,6 @@
-# Realtime-Messenger-Template-Frontend
+# Real-time Messenger's Libraries:
 
-Client's library:
+Client's libraries:
 
 - bootstrap: **^3.3.7**
 - font-awesome **^4.7.0**
