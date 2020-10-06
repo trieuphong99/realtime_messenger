@@ -17,7 +17,9 @@ let postRegister = async (req, res) => {
     let errors = Object.values(validationErrors.mapped());
     errors.forEach(item => {
       errorArr.push(item.msg);
-    })
+    });
+    req.flash("errors", errorArr);
+    return res.redirect("/login-register");
   }
   try {
     let createUserSuccess = await auth.register(req.body.email, req.body.gender, req.body.password);
