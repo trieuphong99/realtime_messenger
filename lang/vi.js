@@ -7,12 +7,25 @@ export const transValidation = {
 
 export const transError = {
   account_in_use: "Email is existed!",
-  account_removed: "account is removed. If there's something wrong, please contact to our customer support team",
-  account_not_activated: "account is not activated yet, please contact to our customer support team"
-}
+  account_removed: "account is removed. If there's something wrong, please contact our customer support team",
+  account_not_activated: "account is not activated yet, please contact our customer support team"
+};
 
 export const transSuccess = {
   userCreated: (userEmail) => {
     return `Your account <strong>${userEmail}</strong> has been created! Please check your email for verifying your account.`
   }
-}
+};
+
+export const transMail = {
+  subject: "Your account need to be confirmed",
+  template: (linkVerify) => {
+    return `
+      <h2>You've just signed up a new Real-time Messenger account</h2>
+      <h3>Please click here to verify</h3>
+      <h3><a href="${linkVerify}" target="blank">${linkVerify}</a></h3>`
+  },
+  failed_to_send: "Sorry, there's something wrong with the mail delivery, please contact our customer support team"
+};
+
+
