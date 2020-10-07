@@ -8,13 +8,15 @@ export const transValidation = {
 export const transError = {
   account_in_use: "Email is existed!",
   account_removed: "account is removed. If there's something wrong, please contact our customer support team",
-  account_not_activated: "account is not activated yet, please contact our customer support team"
+  account_not_activated: "account is not activated yet, please contact our customer support team",
+  token_undefined: "token does not exist"
 };
 
 export const transSuccess = {
   userCreated: (userEmail) => {
     return `Your account <strong>${userEmail}</strong> has been created! Please check your email for verifying your account.`
-  }
+  },
+  account_activated: "Your account has been activated successfully" 
 };
 
 export const transMail = {

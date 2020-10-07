@@ -46,6 +46,18 @@ let register = (email, gender, password, protocol, host) => {
   });
 };
 
+let verifyToken = (token) => {
+  return new Promise( async (resolve, reject) => {
+    let userByToken = await userModel.findByToken(token);
+    if(!userByToken) {
+      return reject(transError.token_undefined);
+    }
+    await userModel.verify(token);
+    resolve(transSuccess.account_activated);
+  });
+};
+
 module.exports = {
-  register: register
+  register: register,
+  verifyToken: verifyToken
 };
