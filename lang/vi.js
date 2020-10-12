@@ -21,7 +21,8 @@ export const transSuccess = {
   account_activated: "Your account has been activated successfully",
   loginSuccess: (username) => {
     return `Wassup ${username}, welcome to Real-time Messenger`
-  }
+  },
+  logout_success: "Log out successfully, see you my dawg"
 };
 
 export const transMail = {

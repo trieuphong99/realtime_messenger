@@ -1,7 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import { transError, transSuccess } from "../../../lang/vi";
-import userModel from "./../../models/userModel";
+import userModel from "../../models/userModel";
 
 let localStrategy = passportLocal.Strategy;
 
