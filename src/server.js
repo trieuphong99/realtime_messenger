@@ -7,30 +7,66 @@ import connectFlash from "connect-flash";
 import configSession from "./config/session";
 import passport from "passport";
 
-let app = express();
+import pem from "pem";
+import https from "https";
 
-/* connect to mongoDB */
-ConnectDB();
+pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+  if (err) {
+    throw err;
+  }
 
-/* config session */
-configSession(app);
+  let app = express();
 
-/* config view engine */
-configViewEngine(app);
+  /* connect to mongoDB */
+  ConnectDB();
 
-/* enable body parser */
-app.use(bodyParser.urlencoded({extended: true}));
+  /* config session */
+  configSession(app);
 
-/* enable flash message */
-app.use(connectFlash());
+  /* config view engine */
+  configViewEngine(app);
 
-/* config passport js */
-app.use(passport.initialize());
-app.use(passport.session());
+  /* enable body parser */
+  app.use(bodyParser.urlencoded({extended: true}));
 
-/* init all routes */
-initRoutes(app);
+  /* enable flash message */
+  app.use(connectFlash());
 
-app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
-  console.log(`Waddup Phong, your server is running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`);
+  /* config passport js */
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  /* init all routes */
+  initRoutes(app);
+
+  https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+    console.log(`Waddup Phong, your server is running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`);
+  });
 });
+
+// let app = express();
+// /* connect to mongoDB */
+// ConnectDB();
+
+// /* config session */
+// configSession(app);
+
+// /* config view engine */
+// configViewEngine(app);
+
+// /* enable body parser */
+// app.use(bodyParser.urlencoded({extended: true}));
+
+// /* enable flash message */
+// app.use(connectFlash());
+
+// /* config passport js */
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// /* init all routes */
+// initRoutes(app);
+
+// app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+//   console.log(`Waddup Phong, your server is running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`);
+// });
