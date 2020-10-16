@@ -250,8 +250,20 @@ hr {
 }
 
 .login .social .facebook {
-  background-color: #455CA8;
+  background-color: #3b5998;
   color: #FFFFFF;
+  border: 1px solid #3b5998;
+  border-radius: 3px;
+}
+
+.login .social .btn {
+  padding: 10px 20px;
+  font-weight: 700;
+}
+
+.login .social .btn-block {
+  display: block;
+  width: 100%;
 }
 
 .login .social .google {
