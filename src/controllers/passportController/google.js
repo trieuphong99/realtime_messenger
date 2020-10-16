@@ -1,28 +1,27 @@
 import passport from "passport";
-import passportFacebook from "passport-facebook";
+import passportGoogle from "passport-google-oauth";
 import { transError, transSuccess } from "../../../lang/vi";
 import userModel from "../../models/userModel";
 
-let facebookStrategy = passportFacebook.Strategy;
+let googleStrategy = passportGoogle.OAuth2Strategy;
 
-let facebookAppID = process.env.FACEBOOK_APP_ID;
-let facebookAppSecret = process.env.FACEBOOK_APP_SECRET;
-let facebookCallbackUrl = process.env.FACEBOOK_CALLBACK_URL;
+let googleAppID = process.env.GOOGLE_APP_ID;
+let googleAppSecret = process.env.GOOGLE_APP_SECRET;
+let googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL;
 
 /**
- * valid user account type facebook
+ * valid user account type google
  */
 
- let initPassportFacebook = () => {
-  passport.use(new facebookStrategy({
-    clientID: facebookAppID,
-    clientSecret: facebookAppSecret,
-    callbackURL: facebookCallbackUrl,
-    passReqToCallback: true,
-    profileFields: ["email", "gender", "displayName"]
+ let initPassportGoogle = () => {
+  passport.use(new googleStrategy({
+    clientID: googleAppID,
+    clientSecret: googleAppSecret,
+    callbackURL: googleCallbackUrl,
+    passReqToCallback: true
   }, async (req, accessToken, refreshToken, profile, done) => {
     try {
-      let user = await userModel.findByFacebookUid(profile.id);
+      let user = await userModel.findByGoogleUid(profile.id);
       if(user) {
         return done(null, user, req.flash("success", transSuccess.loginSuccess(user.username)));
       }
@@ -30,7 +29,7 @@ let facebookCallbackUrl = process.env.FACEBOOK_CALLBACK_URL;
         username: profile.displayName,
         gender: profile.gender,
         local: {isActive: true},
-        facebook: {
+        google: {
           uid: profile.id,
           token: accessToken,
           email: profile.emails[0].value
@@ -59,4 +58,4 @@ let facebookCallbackUrl = process.env.FACEBOOK_CALLBACK_URL;
   })
  };
 
- module.exports = initPassportFacebook;
+ module.exports = initPassportGoogle;

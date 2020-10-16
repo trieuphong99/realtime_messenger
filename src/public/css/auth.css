@@ -241,7 +241,7 @@ hr {
   color: #FFFFFF;
   border-radius: 100px;
   display: inline-block;
-  margin: 0 17px;
+  margin: 0 14px;
   padding: 15px;
 }
 
@@ -255,7 +255,10 @@ hr {
 }
 
 .login .social .google {
-  background-color: #F74933;
+  border-radius: 100px;
+  display: inline-block;
+  margin: 0 17px;
+  padding: 15px;
 }
 
 .login .social .github {
@@ -267,7 +270,6 @@ hr {
 }
 
 .login .google:hover {
-  background-color: #FF7566;
 }
 
 .login .github:hover {
