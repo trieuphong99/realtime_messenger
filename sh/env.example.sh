@@ -20,3 +20,8 @@ export MAIL_PORT=***
 export FACEBOOK_APP_ID=***
 export FACEBOOK_APP_SECRET=***
 export FACEBOOK_CALLBACK_URL=***
+
+#config google login application
+export GOOGLE_APP_ID=***
+export GOOGLE_APP_SECRET=***
+export GOOGLE_CALLBACK_URL=***

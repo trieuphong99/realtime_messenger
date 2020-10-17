@@ -51,7 +51,7 @@ let verifyAccount = async (req, res) => {
 };
 
 let getLogout = (req, res) => {
-  req.logout();
+  req.logout(); // passport's function
   req.flash("success", transSuccess.logout_success);
   return res.redirect("/login-register");
 };
