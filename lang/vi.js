@@ -11,7 +11,9 @@ export const transError = {
   account_not_activated: "account is not activated yet, please contact our customer support team",
   token_undefined: "token does not exist",
   login_failed: "wrong username or password",
-  server_error: "something's wrong with server, please contact our customer support team"
+  server_error: "something's wrong with server, please contact our customer support team",
+  avatar_type_error: "File type is not valid, only jpeg, jpg or png allowed",
+  avatar_size_error: "File size must be less than 1MB"
 };
 
 export const transSuccess = {
@@ -22,7 +24,8 @@ export const transSuccess = {
   loginSuccess: (username) => {
     return `Wassup ${username}, welcome to Real-time Messenger`
   },
-  logout_success: "Log out successfully, see you my dawg"
+  logout_success: "Log out successfully, see you my dawg",
+  avatar_updated: "You look dope, dawg"
 };
 
 export const transMail = {
