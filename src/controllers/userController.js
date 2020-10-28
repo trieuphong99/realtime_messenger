@@ -45,7 +45,7 @@ let updateAvatar = (req, res) => {
       await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
 
       let result = {
-        message:transSuccess.avatar_updated,
+        message:transSuccess.user_info_updated,
         imageSrc: `/images/users/${req.file.filename}`
       }
       return res.status(200).send(result)
@@ -55,6 +55,20 @@ let updateAvatar = (req, res) => {
   });
 }
 
+let updateInfo = async (req, res) => {
+  try{
+    let updateUserItem = req.body;
+    await user.updateUser(req.user._id, updateUserItem);
+
+    let result = {
+      message: transSuccess.user_info_updated
+    };
+    return res.status(200).send(result);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
 module.exports = {
-  updateAvatar: updateAvatar
+  updateAvatar: updateAvatar,
+  updateInfo: updateInfo
 }

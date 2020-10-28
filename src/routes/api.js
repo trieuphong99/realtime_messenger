@@ -35,6 +35,7 @@ let initRoutes = (app) => {
 
   router.get("/logout", auth.checkLoggedin, auth.getLogout);
   router.put("/user/update-avatar", auth.checkLoggedin, user.updateAvatar);
+  router.put("/user/update-info", auth.checkLoggedin, user.updateInfo);
   return app.use("/", router);
 
 };

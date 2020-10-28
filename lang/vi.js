@@ -25,7 +25,7 @@ export const transSuccess = {
     return `Wassup ${username}, welcome to Real-time Messenger`
   },
   logout_success: "Log out successfully, see you my dawg",
-  avatar_updated: "You look dope, dawg"
+  user_info_updated: "Your information has been updated"
 };
 
 export const transMail = {
