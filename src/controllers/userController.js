@@ -14,14 +14,14 @@ let storeAvatar = multer.diskStorage({
     if(math.indexOf(file.mimetype) === -1) {
       return callback(transError.avatar_type_error, null);
     }
-    let avatarName = `${Date.now()}-${uuidv4}-${file.originalname}`;
+    let avatarName = `${Date.now()}-${uuidv4()}-${file.originalname}`;
     callback(null, avatarName);
   }
 });
 
 let avatarUploadFile = multer({
   storage: storeAvatar,
-  limits: {fieldSize: app.avatar_limit_size}
+  limits: {fileSize: app.avatar_limit_size}
 }).single("avatar");
 
 let updateAvatar = (req, res) => {
@@ -37,6 +37,7 @@ let updateAvatar = (req, res) => {
         avatar: req.file.filename,
         updateAt: Date.now()
       };
+      console.log(userUpdateItem);
       // update user's avatar
       let userUpdate = await user.updateUser(req.user._id, userUpdateItem);
 

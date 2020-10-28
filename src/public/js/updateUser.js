@@ -8,17 +8,17 @@ function updateUserInfo() {
     let math = ["image/png", "image/jpg", "image/jpeg"];
     let limit = 1048576; // = 1MB
 
-    // if ($.inArray(fileData.type, math) === -1) { // fileData's data is not matched with any math elements
-    //   alertify.notify("File type is not valid, only jpeg, jpg or png allowed", "error", 7);
-    //   $(this).val(null);
-    //   return false
-    // }
+    if ($.inArray(fileData.type, math) === -1) { // fileData's data is not matched with any math elements
+      alertify.notify("File type is not valid, only jpeg, jpg or png allowed", "error", 7);
+      $(this).val(null);
+      return false;
+    }
 
-    // if (fileData.size > limit) {
-    //   alertify.notify("File size must be less than 1MB", "error", 7);
-    //   $(this).val(null);
-    //   return false
-    // }
+    if (fileData.size > limit) {
+      alertify.notify("File size must be less than 1MB", "error", 7);
+      $(this).val(null);
+      return false;
+    }
 
     if (typeof (FileReader) != "undefined") {
       let imagePreview = $("#image-edit-profile");
@@ -32,7 +32,7 @@ function updateUserInfo() {
           "id": "user-modal-avatar",
           "alt": "avatar"
         }).appendTo(imagePreview);
-      }
+      };
       imagePreview.show();
       fileReader.readAsDataURL(fileData);
 
@@ -74,6 +74,7 @@ $(document).ready(function(){
   originAvatar = $("#user-modal-avatar").attr("src");
 
   $("#input-btn-update-user").bind("click", function() {
+    console.log(userAvatar);
     if($.isEmptyObject(userInfo) && !userAvatar) {
       alertify.notify("You must change your information before contiue.", "error", 7);
       return false;
@@ -93,9 +94,16 @@ $(document).ready(function(){
 
         // update avatar at navbar
         $("#navbar-avatar").attr("src", result.imageSrc);
+        
+        // update origin avatar src
+        originAvatar = result.imageSrc;
+
+        //reset all
+        $("#input-btn-cancel-update-user").click();
       },
       error: function(error) {
         // display errors
+        console.log(error);
         $(".user-modal-alert-error").find("span").text(error.responseText);
         $(".user-modal-alert-error").css("display", "block");
 
