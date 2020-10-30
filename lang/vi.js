@@ -3,6 +3,10 @@ export const transValidation = {
   incorrect_gender: "are u gay?",
   incorrect_password: "your secret unmatches with our conditions, please enter at least 5 chars including upper, lower case, number and special char",
   incorrect_password_confirmation: "please enter the password confirmation exactly",
+  update_username: "The username only limits to 3-17 characters and not includes special ones",
+  update_gender: "Are you trying to do something suspicious?",
+  update_phone: "The phone number is not valid in your country",
+  update_address: "The address only limits to 10-100 characters"
 };
 
 export const transError = {
@@ -11,7 +15,9 @@ export const transError = {
   account_not_activated: "account is not activated yet, please contact our customer support team",
   token_undefined: "token does not exist",
   login_failed: "wrong username or password",
-  server_error: "something's wrong with server, please contact our customer support team"
+  server_error: "something's wrong with server, please contact our customer support team",
+  avatar_type_error: "File type is not valid, only jpeg, jpg or png allowed",
+  avatar_size_error: "File size must be less than 1MB"
 };
 
 export const transSuccess = {
@@ -22,7 +28,8 @@ export const transSuccess = {
   loginSuccess: (username) => {
     return `Wassup ${username}, welcome to Real-time Messenger`
   },
-  logout_success: "Log out successfully, see you my dawg"
+  logout_success: "Log out successfully, see you my dawg",
+  user_info_updated: "Your information has been updated"
 };
 
 export const transMail = {
