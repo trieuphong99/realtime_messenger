@@ -3,6 +3,10 @@ export const transValidation = {
   incorrect_gender: "are u gay?",
   incorrect_password: "your secret unmatches with our conditions, please enter at least 5 chars including upper, lower case, number and special char",
   incorrect_password_confirmation: "please enter the password confirmation exactly",
+  update_username: "The username only limits to 3-17 characters and not includes special ones",
+  update_gender: "Are you trying to do something suspicious?",
+  update_phone: "The phone number is not valid in your country",
+  update_address: "The address only limits to 10-100 characters"
 };
 
 export const transError = {

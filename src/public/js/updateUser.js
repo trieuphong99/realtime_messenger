@@ -48,23 +48,68 @@ function updateUserInfo() {
   });
 
   $("#input-change-username").bind("change", function(){
-    userInfo.username = $(this).val();
+    let username = $(this).val();
+    let regexUsername = new RegExp("/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/");
+    
+    if(!regexUsername.test(username) || username.length < 3 || username.length > 17) {
+      alertify.notify("The username only limits to 3-17 characters and not includes special ones" ,"error", 7);
+      $(this).val(originUserInfo.username);
+      delete userInfo.username;
+      return false;
+    }
+
+    userInfo.username = username;
   });
 
   $("#input-change-gender-male").bind("click", function(){
-    userInfo.gender = $(this).val();
+    let gender = $(this).val();
+
+    if(gender !== "male") {
+      alertify.notify("What kinda your gender?", "error", 7);
+      $(this).val(originUserInfo.gender);
+      delete userInfo.gender;
+      return false;
+    }
+
+    userInfo.gender = gender;
   });
 
   $("#input-change-gender-female").bind("click", function(){
-    userInfo.gender = $(this).val();
+    let gender = $(this).val();
+    if(gender !== "female") {
+      alertify.notify("What kinda your gender?", "error", 7);
+      $(this).val(originUserInfo.gender);
+      delete userInfo.gender;
+      return false;
+    }
+
+    userInfo.gender = gender;
   });
 
   $("#input-change-address").bind("change", function(){
-    userInfo.address = $(this).val();
+    let address = $(this).val();
+
+    if(address.length < 10 || address.length > 100) {
+      alertify.notify("The address only limits to 10-100 characters", "error", 7);
+      $(this).val(originUserInfo.address);
+      delete userInfo.address;
+      return false;
+    }
+
+    userInfo.address = address;
   });
 
   $("#input-change-phone").bind("change", function(){
-    userInfo.phone = $(this).val();
+    let phone = $(this).val();
+    let regexPhone = new RegExp("^(0)[0-9]{9,10}$");
+
+    if(!regexPhone.test(phone)) {
+      alertify.notify("The phone number is not valid in your country", "error", 7);
+      $(this).val(originUserInfo.phone);
+      delete userInfo.phone;
+      return false;
+    }
+    userInfo.phone = phone;
   })
 
 }
@@ -130,7 +175,7 @@ $(document).ready(function(){
         originUserInfo = Object.assign(originUserInfo, userInfo);
 
         // update username at navbar
-        $("#navbar-username").attr(userInfo.username);
+        $("#navbar-username").text(originUserInfo.username);
 
         //reset all
         $("#input-btn-cancel-update-user").click();
