@@ -3,6 +3,7 @@ export const transValidation = {
   incorrect_gender: "are u gay?",
   incorrect_password: "your secret unmatches with our conditions, please enter at least 5 chars including upper, lower case, number and special char",
   incorrect_password_confirmation: "please enter the password confirmation exactly",
+  account_undefined: "The account is not registered yet",
   update_username: "The username only limits to 3-17 characters and not includes special ones",
   update_gender: "Are you trying to do something suspicious?",
   update_phone: "The phone number is not valid in your country",
@@ -17,7 +18,8 @@ export const transError = {
   login_failed: "wrong username or password",
   server_error: "something's wrong with server, please contact our customer support team",
   avatar_type_error: "File type is not valid, only jpeg, jpg or png allowed",
-  avatar_size_error: "File size must be less than 1MB"
+  avatar_size_error: "File size must be less than 1MB",
+  user_current_password_error: "You entered wrong password",
 };
 
 export const transSuccess = {
@@ -29,7 +31,8 @@ export const transSuccess = {
     return `Wassup ${username}, welcome to Real-time Messenger`
   },
   logout_success: "Log out successfully, see you my dawg",
-  user_info_updated: "Your information has been updated"
+  user_info_updated: "Your information has been updated",
+  user_password_updated: "Your password has been updated"
 };
 
 export const transMail = {

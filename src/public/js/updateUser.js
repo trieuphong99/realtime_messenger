@@ -2,6 +2,30 @@ let userAvatar = null;
 let userInfo = {};
 let originAvatar = null;
 let originUserInfo = null;
+let userUpdatePassword = {};
+
+function callLogOut() {
+  Swal.fire({
+    position: "top-end",
+    type: "success",
+    title: "Your work has been saved",
+    showConfirmButton: false,
+    timer: 5000,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+      timerInterval = setInterval(() => {
+        Swal.getContent().querySelector("strong").textContent = Math.ceil(Swal.getTimerLeft()/1000);
+      }, 1000);
+    },
+    onClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then((result) => {
+    $.get("/logout", function() {
+      location.reload();
+    })
+  })
+}
 
 function updateUserInfo() {
   $("#input-change-avatar").bind("change", function(){
@@ -49,7 +73,7 @@ function updateUserInfo() {
 
   $("#input-change-username").bind("change", function(){
     let username = $(this).val();
-    let regexUsername = new RegExp("/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/");
+    let regexUsername = new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/);
     
     if(!regexUsername.test(username) || username.length < 3 || username.length > 17) {
       alertify.notify("The username only limits to 3-17 characters and not includes special ones" ,"error", 7);
@@ -65,7 +89,7 @@ function updateUserInfo() {
     let gender = $(this).val();
 
     if(gender !== "male") {
-      alertify.notify("What kinda your gender?", "error", 7);
+      alertify.notify("Are you trying to do something suspicious?", "error", 7);
       $(this).val(originUserInfo.gender);
       delete userInfo.gender;
       return false;
@@ -77,7 +101,7 @@ function updateUserInfo() {
   $("#input-change-gender-female").bind("click", function(){
     let gender = $(this).val();
     if(gender !== "female") {
-      alertify.notify("What kinda your gender?", "error", 7);
+      alertify.notify("Are you trying to do something suspicious?", "error", 7);
       $(this).val(originUserInfo.gender);
       delete userInfo.gender;
       return false;
@@ -101,7 +125,7 @@ function updateUserInfo() {
 
   $("#input-change-phone").bind("change", function(){
     let phone = $(this).val();
-    let regexPhone = new RegExp("^(0)[0-9]{9,10}$");
+    let regexPhone = new RegExp(/^(0)[0-9]{9,10}$/);
 
     if(!regexPhone.test(phone)) {
       alertify.notify("The phone number is not valid in your country", "error", 7);
@@ -110,7 +134,53 @@ function updateUserInfo() {
       return false;
     }
     userInfo.phone = phone;
-  })
+  });
+
+  $("#input-change-current-password").bind("change", function(){
+    let currentPassword = $(this).val();
+    let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+
+    if(!regexPassword.test(currentPassword)) {
+      alertify.notify("your secret unmatches with our conditions, please enter at least 5 chars including upper, lower case, number and special char", "error", 7);
+      $(this).val(null);
+      delete userUpdatePassword.currentPassword;
+      return false;
+    }
+    userUpdatePassword.currentPassword = currentPassword;
+  });
+
+  $("#input-change-new-password").bind("change", function(){
+    let newPassword = $(this).val();
+    let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+
+    if(!regexPassword.test(newPassword)) {
+      alertify.notify("your secret unmatches with our conditions, please enter at least 5 chars including upper, lower case, number and special char", "error", 7);
+      $(this).val(null);
+      delete userUpdatePassword.newPassword;
+      return false;
+    }
+    userUpdatePassword.newPassword = newPassword;
+  });
+
+  $("#input-change-confirm-new-password").bind("change", function(){
+    let confirmNewPassword = $(this).val();
+
+    if(!userUpdatePassword.newPassword) {
+      alertify.notify("Please enter new password", "error", 7);
+      $(this).val(null);
+      delete userUpdatePassword.confirmNewPassword;
+      return false;
+    }
+
+    if(confirmNewPassword !== userUpdatePassword.newPassword) {
+      alertify.notify("Please re-enter password exactly", "error", 7);
+      $(this).val(null);
+      delete userUpdatePassword.confirmNewPassword;
+      return false;
+    }
+
+    userUpdatePassword.confirmNewPassword = confirmNewPassword;
+  });
 
 }
 
@@ -191,6 +261,36 @@ $(document).ready(function(){
       }
     });
   }
+
+  function callUpdateUserPassword() {
+    $.ajax({
+      url: "/user/update-password",
+      type: "put",
+      data: userUpdatePassword,
+      success: function(result) {
+        // display successfully
+        console.log(result);
+        $(".user-modal-password-alert-success").find("span").text(result.message);
+        $(".user-modal-password-alert-success").css("display", "block");
+
+        //reset all
+        $("#input-btn-cancel-update-user-password").click();
+
+        // Log out after password's changed
+        callLogOut();
+      },
+      error: function(error) {
+        // display errors
+        console.log(error);
+        $(".user-modal-password-alert-error").find("span").text(error.responseText);
+        $(".user-modal-password-alert-error").css("display", "block");
+
+        // reset all
+        $("#input-btn-cancel-update-user-password").click();
+      }
+    });
+  }
+
   $("#input-btn-update-user").bind("click", function() {
     console.log(userAvatar);
     if($.isEmptyObject(userInfo) && !userAvatar) {
@@ -215,5 +315,35 @@ $(document).ready(function(){
     (originUserInfo.gender === "male") ? $("#input-change-gender-male").click() : $("#input-change-gender-female").click();
     $("#input-change-phone").val(originUserInfo.phone);
     $("#input-change-address").val(originUserInfo.address);
+  });
+
+  $("#input-btn-update-user-password").bind("click", function() {
+    if(!userUpdatePassword.currentPassword || !userUpdatePassword.newPassword || !userUpdatePassword.confirmNewPassword) {
+      alertify.notify("You must enter entirely the data form", "error", 7);
+      return false;
+    }
+
+    Swal.fire({
+      title: 'Do you really wanna change your password?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonColor: '#2ECC71',
+      cancelButtonColor: '#ff7675',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if(!result.value) {
+        $("#input-btn-cancel-update-user-password").click();
+        return false;
+      }
+      callUpdateUserPassword();
+    })
+  });
+
+  $("#input-btn-cancel-update-user-password").bind("click", function() {
+    userUpdatePassword = {};
+    $("#input-change-current-password").val(null);
+    $("#input-change-new-password").val(null);
+    $("#input-change-confirm-new-password").val(null);
   });
 })
