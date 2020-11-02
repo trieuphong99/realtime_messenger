@@ -7,7 +7,8 @@ export const transValidation = {
   update_username: "The username only limits to 3-17 characters and not includes special ones",
   update_gender: "Are you trying to do something suspicious?",
   update_phone: "The phone number is not valid in your country",
-  update_address: "The address only limits to 10-100 characters"
+  update_address: "The address only limits to 10-100 characters",
+  keyword_find_user: "You've entered wrong format of keyword, only accept number, syllable and space"
 };
 
 export const transError = {

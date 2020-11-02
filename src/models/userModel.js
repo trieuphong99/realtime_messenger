@@ -69,6 +69,26 @@ UserSchema.statics = {
 
   updatePassword(id, hashedPassword) {
     return this.findByIdAndUpdate(id, {"local.password": hashedPassword}).exec();
+  },
+
+  /**
+   * 
+   * @param {array} deprecatedUserIds 
+   * @param {string} keyword 
+   */
+  findAllForAddContact(deprecatedUserIds, keyword) {
+    return this.find({
+      $and: [
+        {"_.id": {$nin: deprecatedUserIds}}, // find all ids which not include deprectedUserIds
+        {"local.isActive": true},
+        {$or: [
+          {"username": {"$regex": keyword}}, // $regex: mongoose's syntax, this line is finding username which is closet to the keyword
+          {"local.email": {"$regex": keyword}},
+          {"facebook.email": {"$regex": keyword}},
+          {"google.email": {"$regex": keyword}},
+        ]}
+      ]
+    }, {_id: 1, username: 1, address: 1, avatar:1}).exec();
   }
 };
 
