@@ -37,7 +37,9 @@ let initRoutes = (app) => {
   router.put("/user/update-avatar", auth.checkLoggedin, user.updateAvatar);
   router.put("/user/update-info", auth.checkLoggedin, userValid.updateInfo, user.updateInfo);
   router.put("/user/update-password", auth.checkLoggedin, userValid.updatePassword, user.updatePassword);
+
   router.get("/contact/find-users/:keyword", auth.checkLoggedin, contactValid.findUsersContact, contact.findUsersContact);
+  router.post("/contact/add-new", auth.checkLoggedin, contact.addNew);
   return app.use("/", router);
 
 };
