@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 
 let ContactSchema = new Schema({
   userId: String,
-  contacted: String,
+  contactId: String,
   status: {type: Boolean, default: false},
   createdAt: {type: Number, default: Date.now},
   updatedAt: {type: Number, default: null},
@@ -14,6 +14,20 @@ let ContactSchema = new Schema({
 ContactSchema.statics = {
   createNew(item) {
     return this.create(item)
+  },
+
+  /**
+   * Find all items related to user
+   * @param {string} userId 
+   */
+
+  findAllByUser(userId) {
+    return this.find({
+      $or: [
+        {"userId": userId},
+        {"contactId": userId}
+      ]
+    }).exec();
   }
 };
 module.exports = mongoose.model("contact", ContactSchema);
