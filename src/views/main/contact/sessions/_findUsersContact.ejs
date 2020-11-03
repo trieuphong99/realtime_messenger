@@ -1,4 +1,4 @@
-<% users.forEach(function(users){ %>
+<% users.forEach(function(user){ %>
     <li class="_contactList" data-uid="<%= user._id %>">
     <div class="contactPanel">
         <div class="user-avatar">
@@ -6,12 +6,12 @@
         </div>
         <div class="user-name">
             <p>
-                Trung Quân
+                <%= user.username %>
             </p>
         </div>
         <br>
         <div class="user-address">
-            <span>&nbsp Hà Nội, Việt Nam</span>
+            <span>&nbsp <%= user.address %></span>
         </div>
         <div class="user-add-new-contact" data-uid="<%= user._id %>">
             Thêm vào danh sách liên lạc

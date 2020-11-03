@@ -1,4 +1,4 @@
-import {contact} from "./../services/contactService";
+import {contact} from "./../services/index";
 import {validationResult} from "express-validator/check";
 
 let findUsersContact = async (req, res) => {
@@ -19,7 +19,7 @@ let findUsersContact = async (req, res) => {
     let keyword = req.params.keyword;
 
     let users = await contact.findUsersContact(currentUserId, keyword);
-    return res.render("main/contact/sessions/findUsersContact", {users});
+    return res.render("main/contact/sessions/_findUsersContact", {users});
   } catch (error) {
     return res.status(500).send(error);
   }
