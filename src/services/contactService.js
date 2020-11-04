@@ -1,7 +1,6 @@
 import contactModel from "./../models/contactModel";
 import userModel from "./../models/userModel";
 import _ from "lodash";
-import { contact } from ".";
 
 let findUsersContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
@@ -35,7 +34,19 @@ let addNew = (currentUserId, contactId) => {
   });
 }
 
+let removeRequest = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let removeReq = await contactModel.removeContactRequest(currentUserId, contactId);
+
+    if(removeReq.n === 0) {
+      return reject(false);
+    }
+    resolve(true);
+  })
+}
+
 module.exports = {
   findUsersContact: findUsersContact,
-  addNew: addNew
+  addNew: addNew,
+  removeRequest: removeRequest
 }

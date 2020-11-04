@@ -44,6 +44,15 @@ ContactSchema.statics = {
         ]}
       ]
     })
+  },
+
+  removeContactRequest(userId, contactId) {
+    return this.deleteOne({
+      $and: [
+        {"userId": userId},
+        {"contactId": contactId}
+      ]
+    }).exec();
   }
 };
 module.exports = mongoose.model("contact", ContactSchema);

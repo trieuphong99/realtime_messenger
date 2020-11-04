@@ -40,6 +40,7 @@ let initRoutes = (app) => {
 
   router.get("/contact/find-users/:keyword", auth.checkLoggedin, contactValid.findUsersContact, contact.findUsersContact);
   router.post("/contact/add-new", auth.checkLoggedin, contact.addNew);
+  router.delete("/contact/remove-contact-request", auth.checkLoggedin, contact.removeRequest);
   return app.use("/", router);
 
 };
