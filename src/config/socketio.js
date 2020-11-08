@@ -6,7 +6,7 @@ let configSocketIo = (io, cookieParser, sessionStore) => {
     key: process.env.SESSION_KEY,
     secret: process.env.SESSION_SECRET,
     store: sessionStore,
-    success: (data, success) => {
+    success: (data, accept) => {
       if (!data.user.logged_in) {
         return accept("Invalid user.", false);
       }

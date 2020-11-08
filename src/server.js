@@ -71,7 +71,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(connectFlash());
 
 /* user cookie parser */
-app.use(cookieParser);
+app.use(cookieParser());
 
 /* config passport js */
 app.use(passport.initialize());
