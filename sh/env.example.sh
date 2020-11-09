@@ -6,9 +6,12 @@ export DB_USERNAME=***
 export DB_PASSWORD=***
 
 #config app env variable
-
 export APP_HOST=***
 export APP_PORT=***
+
+#config session key & secret
+export SESSION_KEY=***
+export SESSION_SECRET=***
 
 #config admin email account
 export MAIL_USER=***
