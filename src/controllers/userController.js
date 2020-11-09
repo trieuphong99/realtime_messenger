@@ -38,7 +38,7 @@ let updateAvatar = (req, res) => {
         avatar: req.file.filename,
         updateAt: Date.now()
       };
-      console.log(userUpdateItem);
+      
       // update user's avatar
       let userUpdate = await user.updateUser(req.user._id, userUpdateItem);
 

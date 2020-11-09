@@ -79,7 +79,7 @@ UserSchema.statics = {
   findAllForAddContact(deprecatedUserIds, keyword) {
     return this.find({
       $and: [
-        {"_.id": {$nin: deprecatedUserIds}}, // find all ids which not include deprectedUserIds
+        {"_id": {$nin: deprecatedUserIds}}, // find all ids which not include deprectedUserIds
         {"local.isActive": true},
         {$or: [
           {"username": {"$regex": new RegExp(keyword, "i") }}, // $regex: mongoose's syntax, this line is finding username which is closet to the keyword
