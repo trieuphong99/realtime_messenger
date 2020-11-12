@@ -28,7 +28,7 @@ let findUsersContact = async (req, res) => {
 let addNew = async (req, res) => {
   try {
     let currentUserId = req.user._id;
-    let contactId = req.body.uid;
+    let contactId = req.body.uid; // uid is the id of the searched user gotten from addContact function in addContact.js
 
     let newContact = await contact.addNew(currentUserId, contactId);
     return res.status(200).send({success: !!newContact});
