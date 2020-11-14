@@ -13,11 +13,13 @@ function addContact() {
 }
 
 socket.on("add-new-contact-response", function(user) {
-  let notif = `<span class="notif-read-false" data-uid="${user.id}">
+  let notif = `<div class="notif-read-false" data-uid="${user.id}">
               <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
               <strong>${user.username}</strong> đã chấp nhận lời mời kết bạn của bạn!
-              </span><br><br><br>`;
-  $(".noti_content").prepend(notif);  // prepend: adding from top to bottom
+              </div>`;
+  $(".noti_content").prepend(notif);  // prepend: adding from top to bottom // popoup notification
+  $("ul.list-notifications").prepend(`<li>${notif}</li>`); // modal notification
+
   increaseNumberOfNotifContact("count-request-contact-received");
   increaseNumberOfNotification("noti_contact_counter");
   increaseNumberOfNotification("noti_counter");

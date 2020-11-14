@@ -254,7 +254,7 @@ label:focus,
   z-index: 999;
 }
 
-#notifications h3 {
+#popup-mark-notif-as-read {
   display: block;
   color: #333;
   background: #FFF;
@@ -263,6 +263,15 @@ label:focus,
   padding: 8px;
   margin: 0;
   border-bottom: solid 1px rgba(100, 100, 100, .30);
+}
+
+.mark-notif-as-read {
+  float: right;
+  margin-right: 20px;
+}
+
+.read-more-notif {
+  text-align: center;
 }
 
 #notifications:before {
@@ -312,14 +321,12 @@ label:focus,
 }
 
 .noti_content {
-  position: relative;
   height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content>span {
-  position: absolute;
+.noti_content>div {
   max-width: 95%;
   margin-top: 5px;
   margin-left: 7px;
@@ -327,8 +334,17 @@ label:focus,
   padding: 6px;
 }
 
+.noti_content>div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
 .notif-read-false {
   background: #E3E8F0;
+}
+
+#noti_Button:hover {
+  text-decoration: none;
 }
 
 .seeAll {
@@ -428,6 +444,26 @@ label:focus,
 }
 
 .list-attachs li:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.list-notifications li {
+  width: 90%;
+  height: auto;
+  padding: 7px 0px 12px 5px;
+  margin: 0 auto;
+  list-style-type: none;
+}
+
+.list-notifications li div {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #dfe6e9;
+}
+
+.list-notifications li div:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
