@@ -39,7 +39,7 @@ NotificationSchema.statics = {
    * @param {string} userId
    */
   countNotifUnread(userId) {
-    return this.count({
+    return this.countDocuments({
       $and: [
         {"receiverId": userId},
         {"isRead": false} 
@@ -55,7 +55,21 @@ NotificationSchema.statics = {
    */
   readMore(userId, skip, limit) {
     return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
-  }
+  },
+
+  /**
+   * mark all notifications as read
+   * @param {string} userId 
+   * @param {array} targetUsers 
+   */
+  markAllAsRead(userId, targetUsers) {
+    return this.updateMany({
+      $and: [
+        {"receiverId": userId},
+        {"senderId": {$in: targetUsers}},
+      ]
+    }, {"isRead": true}).exec();
+  },
 }
 
 const NOTIFICATION_TYPES = {

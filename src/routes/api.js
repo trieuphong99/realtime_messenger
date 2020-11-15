@@ -42,7 +42,8 @@ let initRoutes = (app) => {
   router.post("/contact/add-new", auth.checkLoggedin, contact.addNew);
   router.delete("/contact/remove-contact-request", auth.checkLoggedin, contact.removeRequest);
 
-  router.get("/notification/read-more?", auth.checkLoggedin, notification.readMore);
+  router.get("/notification/read-more", auth.checkLoggedin, notification.readMore);
+  router.put("/notification/mark-all-as-read", auth.checkLoggedin, notification.markAllAsRead);
   return app.use("/", router);
 
 };

@@ -1,3 +1,5 @@
+import { reject, resolve } from "bluebird";
+import { notification } from ".";
 import notificationModel from "./../models/notificationModel";
 import userModel from "./../models/userModel";
 
@@ -50,8 +52,21 @@ let readMore = (currentUserId, skipNumberNotifications) => {
   });
 };
 
+let markAllAsRead = (currentUserId, targetUsers) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await notificationModel.model.markAllAsRead(currentUserId, targetUsers);
+      resolve(true);
+    } catch (error) {
+      console.log(`Something's wrong happened: ${error}`);
+      reject(false);
+    }
+  });
+}
+
 module.exports = {
   getNotifications: getNotifications,
   countNotifUnread: countNotifUnread,
-  readMore: readMore
+  readMore: readMore,
+  markAllAsRead: markAllAsRead
 }
