@@ -468,6 +468,64 @@ label:focus,
   background-color: #eceff1;
 }
 
+.read-more-notif-loader {
+  display: none;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 48px;
+}
+.read-more-notif-loader div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #337ab7;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.read-more-notif-loader div:nth-child(1) {
+  left: 8px;
+  animation: read-more-notif-loader1 0.6s infinite;
+}
+.read-more-notif-loader div:nth-child(2) {
+  left: 8px;
+  animation: read-more-notif-loader2 0.6s infinite;
+}
+.read-more-notif-loader div:nth-child(3) {
+  left: 32px;
+  animation: read-more-notif-loader2 0.6s infinite;
+}
+.read-more-notif-loader div:nth-child(4) {
+  left: 56px;
+  animation: read-more-notif-loader3 0.6s infinite;
+}
+@keyframes read-more-notif-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes read-more-notif-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes read-more-notif-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
 .navbar-brand>img {
   margin: -12px 0px 0px 7px;
   width: 150px;
@@ -904,34 +962,25 @@ label:focus,
   max-width: 50%;
 }
 
-#loader {
+.master-loader {
   position: absolute;
   left: 50%;
   top: 50%;
   z-index: 2;
-  width: 150px;
-  height: 150px;
   margin: -75px 0 0 -75px;
-  border: 7px solid #f3f3f3;
+}
+.master-loader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
   border-radius: 50%;
-  border-top: 7px solid #7ed6df;
-  border-bottom: 7px solid #7ed6df;
-  width: 70px;
-  height: 70px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+  border: 6px solid #337ab3;
+  border-color: #337ab3 transparent #337ab3 transparent;
+  animation: master-loader 1.2s linear infinite;
 }
-
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
+@keyframes master-loader {
   0% {
     transform: rotate(0deg);
   }

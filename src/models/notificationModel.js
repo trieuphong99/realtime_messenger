@@ -46,6 +46,16 @@ NotificationSchema.statics = {
       ]
     }).exec()
   },
+
+  /**
+   * read more notifications
+   * @param {string} userId 
+   * @param {number} skip // number of notifications are skipped
+   * @param {number} limit 
+   */
+  readMore(userId, skip, limit) {
+    return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+  }
 }
 
 const NOTIFICATION_TYPES = {
