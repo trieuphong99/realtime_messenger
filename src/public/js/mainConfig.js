@@ -46,11 +46,11 @@ function enableEmojioneArea(chatId) {
 }
 
 function spinLoaded() {
-  $('#loader').css('display', 'none');
+  $('.master-loader').css('display', 'none');
 }
 
 function spinLoading() {
-  $('#loader').css('display', 'block');
+  $('.master-loader').css('display', 'block');
 }
 
 function ajaxLoading() {
@@ -75,7 +75,7 @@ function configNotification() {
     $('.noti_counter').fadeOut('slow');
     return false;
   });
-  $(document).click(function() {
+  $(".main-content").click(function() {
     $('#notifications').fadeOut('fast', 'linear');
   });
 }
