@@ -44,7 +44,7 @@ NotificationSchema.statics = {
         {"receiverId": userId},
         {"isRead": false} 
       ]
-    }).exec()
+    }).exec();
   },
 
   /**

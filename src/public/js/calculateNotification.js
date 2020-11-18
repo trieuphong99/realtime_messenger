@@ -5,7 +5,7 @@ function increaseNumberOfNotification (className, number) {
   if(currentValue === 0) {
     $(`.${className}`).css("display", "none").html("");
   } else {
-    $(`.${className}`).css("display", "block").html(`(${currentValue})`);
+    $(`.${className}`).css("display", "block").html(currentValue);
   }
 }
 
@@ -16,6 +16,6 @@ function decreaseNumberOfNotification (className, number) {
   if(currentValue === 0) {
     $(`.${className}`).css("display", "none").html("");
   } else {
-    $(`.${className}`).css("display", "block").html(`(${currentValue})`);
+    $(`.${className}`).css("display", "block").html(currentValue);
   }
 }

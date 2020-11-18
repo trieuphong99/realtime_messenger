@@ -10,6 +10,9 @@ function removeContactRequest() {
           $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).hide();
           $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display", "inline-block");
           decreaseNumberOfNotifContact("count-request-contact-sent");
+
+          // delete request in Dang cho xac nhan page
+          $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
           socket.emit("remove-contact-request", {contactId: targetId});
         }
       }
@@ -20,6 +23,9 @@ function removeContactRequest() {
 socket.on("remove-contact-request-response", function(user) {
   $(".noti_content").find(`div[data_uid = ${user.id}]`).remove(); // popup notification
   $("ul.list-notifications").find(`li>div[data_uid = ${user.id}]`).parent().remove(); // modal notification
+  
+  // delete request in Yeu cau ket ban page
+  $("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
   
   decreaseNumberOfNotifContact("count-request-contact-received");
   decreaseNumberOfNotification("noti_contact_counter", 1);

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { contact } from "../services";
 
 let Schema = mongoose.Schema;
 
@@ -53,6 +52,93 @@ ContactSchema.statics = {
         {"contactId": contactId}
       ]
     }).exec();
-  }
+  },
+
+  /**
+   * get all user's contacts
+   * @param {string} userId 
+   * @param {number} limit 
+   */
+  getContacts(userId, limit) {
+    return this.find({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  /**
+   * get contacts that user sent
+   * @param {string} userId 
+   * @param {number} limit 
+   */
+  getSentContacts(userId, limit) {
+    return this.find({
+      $and: [
+        {"userId": userId},
+        {"status": false}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  /**
+   * get contacts that user received
+   * @param {string} userId 
+   * @param {number} limit 
+   */
+  getReceivedContacts(userId, limit) {
+    return this.find({
+      $and: [
+        {"contactId": userId},
+        {"status": false}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  /**
+   * count all user's contacts
+   * @param {string} userId 
+   */
+  countAllContacts(userId) {
+    return this.count({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true}
+      ]
+    }).exec();
+  },
+
+  /**
+   * count all contacts that user sent
+   * @param {string} userId 
+   */
+  countAllSentContacts(userId) {
+    return this.count({
+      $and: [
+        {"userId": userId},
+        {"status": false}
+      ]
+    }).exec();
+  },
+
+  /**
+   * count all contacts that user received
+   * @param {string} userId 
+   */
+  countAllReceivedContacts(userId) {
+    return this.count({
+      $and: [
+        {"contactId": userId},
+        {"status": false}
+      ]
+    }).exec();
+  },
 };
 module.exports = mongoose.model("contact", ContactSchema);
