@@ -54,6 +54,18 @@ ContactSchema.statics = {
     }).exec();
   },
 
+  readMoreContacts(userId, skipNumber, limit) {
+    return this.find({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true}
+      ]
+    }).sort({"createdAt": -1}).skip(skipNumber).limit(limit).exec();
+  },
+
   /**
    * get all user's contacts
    * @param {string} userId 

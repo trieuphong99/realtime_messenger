@@ -61,6 +61,25 @@ let removeRequest = (currentUserId, contactId) => {
   })
 };
 
+let readMoreContacts = (currentUserId, skipNumberContacts) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let newContacts = await contactModel.readMoreContacts(currentUserId, skipNumberContacts, LIMIT_TAKEN_NUMBER);
+
+      let listUsers = newContacts.map(async (contact) => {
+        if(contact.contactId == currentUserId) {
+          return await userModel.findUserById(contact.userId);
+        } else {
+          return await userModel.findUserById(contact.contactId);
+        }
+      });
+      resolve(await Promise.all(listUsers));
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 let getContacts = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -149,5 +168,6 @@ module.exports = {
   getReceivedContacts: getReceivedContacts,
   countAllContacts: countAllContacts,
   countAllSentContacts: countAllSentContacts,
-  countAllReceivedContacts: countAllReceivedContacts
+  countAllReceivedContacts: countAllReceivedContacts,
+  readMoreContacts: readMoreContacts
 }

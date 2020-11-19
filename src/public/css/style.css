@@ -529,6 +529,64 @@ label:focus,
   }
 }
 
+.read-more-contacts-loader {
+  display: none;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 48px;
+}
+.read-more-contacts-loader div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #337ab7;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.read-more-contacts-loader div:nth-child(1) {
+  left: 8px;
+  animation: read-more-contacts-loader1 0.6s infinite;
+}
+.read-more-contacts-loader div:nth-child(2) {
+  left: 8px;
+  animation: read-more-contacts-loader2 0.6s infinite;
+}
+.read-more-contacts-loader div:nth-child(3) {
+  left: 32px;
+  animation: read-more-contacts-loader2 0.6s infinite;
+}
+.read-more-contacts-loader div:nth-child(4) {
+  left: 56px;
+  animation: read-more-contacts-loader3 0.6s infinite;
+}
+@keyframes read-more-contacts-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes read-more-contacts-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes read-more-contacts-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
 .navbar-brand>img {
   margin: -12px 0px 0px 7px;
   width: 150px;
