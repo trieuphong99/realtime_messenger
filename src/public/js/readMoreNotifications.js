@@ -15,9 +15,9 @@ $(document).ready(function(){
       }
       notifications.forEach(function(notification) {
         $("ul.list-notifications").append(`<li>${notification}</li>`);
-        $("#link-read-more-notif").css("display", "inline-block");
-        $(".read-more-notif-loader").css("display", "none");
       });
+      $("#link-read-more-notif").css("display", "inline-block");
+      $(".read-more-notif-loader").css("display", "none");
     });
   })
 })
