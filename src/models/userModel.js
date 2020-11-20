@@ -59,6 +59,10 @@ UserSchema.statics = {
     return this.findById(id).exec();
   },
 
+  getNormalUserDataById(id) {
+    return this.findById(id, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+  },
+
   findByFacebookUid(uid) {
     return this.findOne({"facebook.uid": uid}).exec();
   },
@@ -88,7 +92,7 @@ UserSchema.statics = {
           {"google.email": {"$regex": new RegExp(keyword, "i")}},
         ]}
       ]
-    }, {_id: 1, username: 1, address: 1, avatar:1}).exec();
+    }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
   }
 };
 
