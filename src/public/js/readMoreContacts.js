@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     $.get(`/contact/read-more-contacts?skipNumber=${skipNumber}`, function(contacts) {
       if (!contacts.length) {
-        alertify.notify("You no longer have any notifs", "error", 7);
+        alertify.notify("You no longer have any contacts", "error", 7);
 
         $("#link-read-more-contacts").css("display", "inline-block");
         $(".read-more-contacts-loader").css("display", "none");
