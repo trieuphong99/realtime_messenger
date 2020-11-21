@@ -10,6 +10,9 @@ function addContact() {
         // get user's info of Tim nguoi dung page
         let userInfoHtml = $("#find-user").find(`ul li[data-uid=${targetId}]`).get(0).outerHTML;
         $("#request-contact-sent").find("ul").prepend(userInfoHtml);
+        // add remove button
+        removeContactRequest();
+        
         socket.emit("add-new-contact", {contactId: targetId});
       }
     })
