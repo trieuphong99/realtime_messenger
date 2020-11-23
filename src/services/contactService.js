@@ -3,7 +3,7 @@ import userModel from "./../models/userModel";
 import notificationModel from "./../models/notificationModel";
 import _ from "lodash";
 
-const LIMIT_TAKEN_NUMBER = 10;
+const LIMIT_TAKEN_NUMBER = 1;
 
 let findUsersContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
@@ -46,7 +46,7 @@ let addNew = (currentUserId, contactId) => {
   });
 }
 
-let removeRequest = (currentUserId, contactId) => {
+let removeRequest = (currentUserId, contactId) => { // remove contact request
   return new Promise(async (resolve, reject) => {
     let removeReq = await contactModel.removeContactRequest(currentUserId, contactId);
 
@@ -57,6 +57,21 @@ let removeRequest = (currentUserId, contactId) => {
     // remove notification of contact
 
     await notificationModel.model.removeRequestNotification(currentUserId, contactId, notificationModel.types.ADD_CONTACT);
+    resolve(true);
+  })
+};
+
+let removeReceivedRequest = (currentUserId, contactId) => {  // remove received contact request
+  return new Promise(async (resolve, reject) => {
+    let removeReq = await contactModel.removeReceivedContactRequest(currentUserId, contactId);
+
+    if(removeReq.n === 0) {
+      return reject(false);
+    }
+
+    // remove notification of contact
+
+    //await notificationModel.model.removeReceivedRequestNotification(currentUserId, contactId, notificationModel.types.ADD_CONTACT);
     resolve(true);
   })
 };
@@ -192,6 +207,7 @@ module.exports = {
   findUsersContact: findUsersContact,
   addNew: addNew,
   removeRequest: removeRequest,
+  removeReceivedRequest: removeReceivedRequest,
   getContacts: getContacts,
   getSentContacts: getSentContacts,
   getReceivedContacts: getReceivedContacts,
