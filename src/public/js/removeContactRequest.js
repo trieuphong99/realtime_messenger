@@ -1,5 +1,5 @@
 function removeContactRequest() {
-  $(".user-remove-request-contact").unbind("click").on("click", function() {
+  $(".user-remove-request-contact").unbind("click").on("click", function() { // unbind all click events and send only one request each click
     let targetId = $(this).data("uid");
     $.ajax({
       url: "/contact/remove-contact-request",
@@ -32,3 +32,7 @@ socket.on("remove-contact-request-response", function(user) {
   decreaseNumberOfNotification("noti_counter", 1);
 });
 
+// initialize remove button at the first time when you refresh page (F5) 
+$(document).ready(function() {
+  removeContactRequest();
+});
