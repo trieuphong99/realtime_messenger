@@ -14,7 +14,6 @@ let findUsersContact = (currentUserId, keyword) => {
       deprecatedUserIds.push(contact.contactId);
     });
     deprecatedUserIds = _.uniqBy(deprecatedUserIds);
-    console.log(deprecatedUserIds);
     
     let users = await userModel.findAllForAddContact(deprecatedUserIds, keyword);
     resolve(users);
@@ -72,6 +71,24 @@ let removeReceivedRequest = (currentUserId, contactId) => {  // remove received 
     // remove notification of contact
 
     //await notificationModel.model.removeReceivedRequestNotification(currentUserId, contactId, notificationModel.types.ADD_CONTACT);
+    resolve(true);
+  })
+};
+
+let approveReceivedRequest = (currentUserId, contactId) => {  // approve received contact request
+  return new Promise(async (resolve, reject) => {
+    let approveReq = await contactModel.approveReceivedContactRequest(currentUserId, contactId);
+    if(approveReq.nModified === 0) {
+      return reject(false);
+    }
+
+    // notification of new contact
+    let notificationItem = {
+      senderId: currentUserId,
+      receiverId: contactId,
+      type: notificationModel.types.APPROVE_CONTACT,
+    };
+    await notificationModel.model.createNew(notificationItem);
     resolve(true);
   })
 };
@@ -211,6 +228,7 @@ module.exports = {
   getContacts: getContacts,
   getSentContacts: getSentContacts,
   getReceivedContacts: getReceivedContacts,
+  approveReceivedRequest: approveReceivedRequest,
   countAllContacts: countAllContacts,
   countAllSentContacts: countAllSentContacts,
   countAllReceivedContacts: countAllReceivedContacts,

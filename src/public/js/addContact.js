@@ -24,7 +24,7 @@ function addContact() {
 socket.on("add-new-contact-response", function(user) {
   let notif = `<div class="notif-read-false" data-uid="${user.id}">
               <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
-              <strong>${user.username}</strong> đã chấp nhận lời mời kết bạn của bạn!
+              <strong>${user.username}</strong> đã gui cho ban mot lời mời kết ban!
               </div>`;
   $(".noti_content").prepend(notif);  // prepend: adding from top to bottom // popoup notification
   $("ul.list-notifications").prepend(`<li>${notif}</li>`); // modal notification
@@ -48,7 +48,7 @@ socket.on("add-new-contact-response", function(user) {
                             <div class="user-address">
                                 <span>${user.address}</span>
                             </div>
-                            <div class="user-acccept-contact-received" data-uid="${user.id}">
+                            <div class="user-approve-request-contact-received" data-uid="${user.id}">
                                 Chấp nhận
                             </div>
                             <div class="user-remove-request-contact-received action-danger" data-uid="${user.id}">
@@ -58,4 +58,5 @@ socket.on("add-new-contact-response", function(user) {
                       </li>`
   $("#request-contact-received").find("ul").prepend(userInfoHtml);
   removeReceivedContactRequest(); // add remove button
+  approveReceivedContactRequest();
 });
