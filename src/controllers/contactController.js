@@ -23,7 +23,7 @@ let findUsersContact = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 let addNew = async (req, res) => {
   try {
@@ -35,7 +35,7 @@ let addNew = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 let removeRequest = async (req, res) => {
   try {
@@ -73,6 +73,18 @@ let approveReceivedRequest = async (req, res) => {
   }
 };
 
+let deleteContact = async (req, res) => {
+  try {
+    let currentUserId = req.user._id;
+    let contactId = req.body.uid;
+
+    let deletedContact = await contact.deleteContact(currentUserId, contactId);
+    return res.status(200).send({success: !!deletedContact});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
 let readMoreContacts = async (req, res) => {
   try {
     // get skip number from query param
@@ -84,7 +96,7 @@ let readMoreContacts = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 let readMoreSentContacts = async (req, res) => {
   try {
@@ -110,7 +122,7 @@ let readMoreReceivedContacts = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 module.exports = {
   findUsersContact: findUsersContact,
@@ -118,6 +130,7 @@ module.exports = {
   removeRequest: removeRequest,
   removeReceivedRequest: removeReceivedRequest,
   approveReceivedRequest: approveReceivedRequest,
+  deleteContact: deleteContact,
   readMoreContacts: readMoreContacts,
   readMoreSentContacts: readMoreSentContacts,
   readMoreReceivedContacts: readMoreReceivedContacts
