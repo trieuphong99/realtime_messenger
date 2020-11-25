@@ -174,6 +174,23 @@ ContactSchema.statics = {
     }).sort({"createdAt": -1}).skip(skipNumber).limit(limit).exec();
   },
 
+  deleteContact(userId, contactId) {
+    return this.remove({
+      $or: [
+        {$and: [
+          {"userId": userId},
+          {"contactId": contactId},
+          {"status": true}
+        ]},
+        {$and: [
+          {"contactId": userId},
+          {"userId": contactId},
+          {"status": true}
+        ]}
+      ]
+    }).exec();
+  },
+
   readMoreSentContacts(userId, skipNumber, limit) {
     return this.find({
       $and: [

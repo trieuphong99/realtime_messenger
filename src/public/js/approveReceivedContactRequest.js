@@ -29,6 +29,8 @@ function approveReceivedContactRequest() {
 
           // caculateNotification.js
           decreaseNumberOfNotification("noti_contact_counter", 1);
+
+          deleteContact(); // add delete contact button
           socket.emit("approve-received-contact-request", {contactId: targetId});
         }
       }
@@ -78,6 +80,7 @@ socket.on("approve-received-contact-request-response", function(user) {
                         </div>
                     </li>`;
   $("#contacts").find("ul").prepend(userInfoHtml);
+  deleteContact(); // add delete contact button
 });
 
 // initialize approve button at the first time when you refresh page (F5) 

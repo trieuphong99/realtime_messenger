@@ -93,6 +93,17 @@ let approveReceivedRequest = (currentUserId, contactId) => {  // approve receive
   })
 };
 
+let deleteContact = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let deletedContact = await contactModel.deleteContact(currentUserId, contactId);
+
+    if(deletedContact.n === 0) {
+      return reject(false);
+    }
+    resolve(true);
+  })
+};
+
 let getContacts = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -229,6 +240,7 @@ module.exports = {
   getSentContacts: getSentContacts,
   getReceivedContacts: getReceivedContacts,
   approveReceivedRequest: approveReceivedRequest,
+  deleteContact: deleteContact,
   countAllContacts: countAllContacts,
   countAllSentContacts: countAllSentContacts,
   countAllReceivedContacts: countAllReceivedContacts,
