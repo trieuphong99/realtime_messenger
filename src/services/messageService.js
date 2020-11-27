@@ -12,11 +12,11 @@ let getAllConversationItems = (currentUserId) => {
       let listUsers = contacts.map(async (contact) => {
         if(contact.contactId == currentUserId) {
           let getUserByContact =  await userModel.getNormalUserDataById(contact.userId);
-          getUserByContact.createdAt = contact.createdAt; // two variables have the same type 'Object'
+          getUserByContact.updatedAt = contact.updatedAt; // two variables have the same type 'Object'
           return getUserByContact;
         } else {
           let getUserByContact =  await userModel.getNormalUserDataById(contact.contactId);
-          getUserByContact.createdAt = contact.createdAt;
+          getUserByContact.updatedAt = contact.updatedAt;
           return getUserByContact;
         }
       });
@@ -26,7 +26,7 @@ let getAllConversationItems = (currentUserId) => {
       let allConversations = userConversations.concat(groupConversations);
 
       allConversations = _.sortBy(allConversations, (item) => {
-        return -item.createdAt;
+        return -item.updatedAt;
       });
       resolve({
         userConversations: userConversations,
