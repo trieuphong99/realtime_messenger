@@ -141,13 +141,21 @@ function changeTypeChat() {
   $("#select-type-chat").bind("change", function() {
     let optionSelected = $("option:selected", this);
     optionSelected.tab("show");
+
+    if($(this).val() === "user-chat") {
+      $(".create-group-chat").hide();
+    } else {
+      $(".create-group-chat").show();
+    }
   });
-  if($(this).val() === "user-chat") {
-    $(".create-group-chat").hide();
-  } else {
-    $(".create-group-chat").show();
-  }
 }
+
+function changeChatScreen() {
+  $(".room-chat").unbind("click").on("click", function() {
+    $(this).tab("show");
+  });
+}
+
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -180,4 +188,8 @@ $(document).ready(function() {
 
   // Thay doi kieu tro chuyen
   changeTypeChat();
+
+  // thay doi man hinh tro chuyen
+  changeChatScreen();
+
 });
