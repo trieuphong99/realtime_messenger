@@ -1,6 +1,6 @@
 <div class="col-sm-9 sidenav no-padding">
     <div class="tab-content" id="chat-screen">
-        <% allConversations.forEach(function(conversation, index) { %>
+        <% allConversationsWithMessages.forEach(function(conversation, index) { %>
             <% if(conversation.members) { %>
                 <div class="right tab-pane <% if(index === 0) { %> active <% } %>" data-chat="<%= conversation._id %>" id="to_<%= conversation._id %>">
                     <div class="top">
