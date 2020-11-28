@@ -1,4 +1,5 @@
 import {contact, message, notification} from "./../services/index";
+import {bufferToBase64} from "./../helpers/clientHelper";
 
 let getHome = async (req, res) => {
   // only 10 notifications received
@@ -43,7 +44,8 @@ let getHome = async (req, res) => {
     allConversations: allConversations,
     userConversations: userConversations,
     groupConversations: groupConversations,
-    allConversationsWithMessages: allConversationsWithMessages
+    allConversationsWithMessages: allConversationsWithMessages,
+    bufferToBase64: bufferToBase64
   });
 };
 

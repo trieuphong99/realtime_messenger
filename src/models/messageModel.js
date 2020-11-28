@@ -37,7 +37,7 @@ MessageSchema.statics = {
           {"receiverId": senderId}
         ]}
       ]
-    }).sort({"createdAt": -1}).limit(limit).exec();
+    }).sort({"createdAt": 1}).limit(limit).exec();
   },
 };
 

@@ -152,6 +152,8 @@ function changeTypeChat() {
 
 function changeChatScreen() {
   $(".room-chat").unbind("click").on("click", function() {
+    $(".person").removeClass("active");
+    $(this).find("li").addClass("active");
     $(this).tab("show");
   });
 }
@@ -192,4 +194,6 @@ $(document).ready(function() {
   // thay doi man hinh tro chuyen
   changeChatScreen();
 
+  // click vao phan tu dau tien cua cuoc tro chuyen
+  $("ul.people").find("li")[0].click();
 });
