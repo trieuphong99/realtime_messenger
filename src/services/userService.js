@@ -19,7 +19,7 @@ let updateUser = (id, item) => {
  */
 let updatePassword = (id, dataUpdate) => {
   return new Promise(async (resolve, reject) => {
-    let currentUser = await userModel.findUserById(id);
+    let currentUser = await userModel.findUserByIdToUpdatePassword(id);
     if(!currentUser){
       return reject(transError.account_undefined);
     }

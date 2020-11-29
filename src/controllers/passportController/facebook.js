@@ -51,7 +51,7 @@ let facebookCallbackUrl = process.env.FACEBOOK_CALLBACK_URL;
     done(null, user._id);
   });
   passport.deserializeUser((id, done) => {
-    userModel.findUserById(id)
+    userModel.findUserByIdForSession(id)
       .then(user => {
         return done(null, user);
       })
