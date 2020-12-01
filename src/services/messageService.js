@@ -32,9 +32,15 @@ let getAllConversationItems = (currentUserId) => {
       });
 
       let allConversationsWithMessagesPromise = allConversations.map(async (conversation) => {
-        let getMessages = await messageModel.model.getMessages(currentUserId, conversation._id, LIMIT_TAKEN_MESSAGES);
         conversation = conversation.toObject();
-        conversation.messages = getMessages; // create messages field
+        if(conversation.members) {
+          let getMessages = await messageModel.model.getGroupMessages(conversation._id, LIMIT_TAKEN_MESSAGES);
+          conversation.messages = getMessages; // create messages field
+        } else {
+          let getMessages = await messageModel.model.getPersonalMessages(currentUserId, conversation._id, LIMIT_TAKEN_MESSAGES);
+          conversation.messages = getMessages; // create messages field
+        }
+
         return conversation;
       });
 
