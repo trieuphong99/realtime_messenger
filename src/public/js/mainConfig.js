@@ -34,9 +34,11 @@ function enableEmojioneArea(divId) {
     shortnames: false,
     events: {
       keyup: function(editor, event) {
+        // assign value to input hidden tag 
         $(`#write-chat-${divId}`).val(this.getText());
       },
       click: function() {
+        // turn on DOM listener to chatting
         textAndEmojiChat(divId);
       }
     },
@@ -205,5 +207,5 @@ $(document).ready(function() {
   changeChatScreen();
 
   // click vao phan tu dau tien cua cuoc tro chuyen
-  $("ul.people").find("li")[0].click();
+  $("ul.people").find("a")[0].click();
 });

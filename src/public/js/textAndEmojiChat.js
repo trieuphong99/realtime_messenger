@@ -3,6 +3,8 @@ function textAndEmojiChat(divId){
     if(element.which === 13) {
       let targetId = $(`#write-chat-${divId}`).data("chat");
       let messageVal = $(`#write-chat-${divId}`).val();
+
+      
     
       let dataTextEmojiForSend = {
         uid: targetId,
@@ -14,12 +16,11 @@ function textAndEmojiChat(divId){
       }
 
       $.post("/message/add-new-text-emoji", dataTextEmojiForSend, function(data){
-        // success
+        console.log(data.message);
       }).fail(function(response){
-        // error
+        // responseText is initialized in response, console.log(response) to check it out.
+        alertify.notify(response.responseText, "error", 7);
       });
-      console.log(targetId);
-      console.log(messageVal);
     }
   });
 }

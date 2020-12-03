@@ -8,7 +8,8 @@ export const transValidation = {
   update_gender: "Are you trying to do something suspicious?",
   update_phone: "The phone number is not valid in your country",
   update_address: "The address only limits to 10-100 characters",
-  keyword_find_user: "You've entered wrong format of keyword, only accept number, syllable and space"
+  keyword_find_user: "You've entered wrong format of keyword, only accept number, syllable and space",
+  incorrect_message_text_emoji: "Invalid message, make sure you enter at least 1 or 100 characters as maximum"
 };
 
 export const transError = {
@@ -21,6 +22,7 @@ export const transError = {
   avatar_type_error: "File type is not valid, only jpeg, jpg or png allowed",
   avatar_size_error: "File size must be less than 1MB",
   user_current_password_error: "You entered wrong password",
+  conversation_not_found: "Conversation not found"
 };
 
 export const transSuccess = {

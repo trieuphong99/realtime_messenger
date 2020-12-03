@@ -25,7 +25,9 @@ let MessageSchema = new Schema({
 });
 
 MessageSchema.statics = {
-
+  createNew(item) {
+    return this.create(item);
+  },
   /**
    * 
    * @param {string} senderId curentUserId
