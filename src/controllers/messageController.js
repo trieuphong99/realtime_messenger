@@ -1,4 +1,4 @@
-import { validationResult } from "express-validator/check";
+import {validationResult} from "express-validator/check";
 import {message} from "./../services/index";
 
 let addNewTextEmoji = async (req, res) => {
@@ -16,8 +16,8 @@ let addNewTextEmoji = async (req, res) => {
   try {
     let sender = {
       id: req.user._id,
-      name: req.user.name,
-      avatar: req.user.avatar
+      name: req.user.username,
+      avatar: req.user.avatar,
     };
 
     let receiverId = req.body.uid;

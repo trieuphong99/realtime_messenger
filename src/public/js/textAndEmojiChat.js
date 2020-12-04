@@ -19,7 +19,8 @@ function textAndEmojiChat(divId){
         console.log(data.message);
       }).fail(function(response){
         // responseText is initialized in response, console.log(response) to check it out.
-        alertify.notify(response.responseText, "error", 7);
+        //alertify.notify(response.responseText, "error", 7);
+        console.log(response);
       });
     }
   });

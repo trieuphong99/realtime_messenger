@@ -4,7 +4,7 @@ import chatGroupModel from "./../models/chatGroupModel";
 import messageModel from "./../models/messageModel";
 import _ from "lodash";
 import {transError} from "./../../lang/vi";
-import app from "./../config/app";
+import {app} from "./../config/app";
 
 const LIMIT_TAKEN_CONVERSATIONS = 10;
 const LIMIT_TAKEN_MESSAGES = 10;
@@ -69,7 +69,7 @@ let getAllConversationItems = (currentUserId) => {
  * @param {boolean} isChatGroup 
  */
 let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       if(isChatGroup) {
         let getChatGroupReceiver = await chatGroupModel.getChatGroupById(receiverId);
@@ -86,13 +86,13 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         let newMessageItem = {
           senderId: sender.id,
           receiverId: receiver.id,
-          conversationType: chatGroupModel.conversationTypes.GROUP,
+          conversationType: messageModel.conversationTypes.GROUP,
           messageType: messageModel.messageTypes.TEXT,
           sender: sender,
           receiver: receiver,
           text: messageVal,
           createdAt: Date.now()
-        }
+        };
 
         let newMessage = await messageModel.model.createNew(newMessageItem);
 
@@ -114,7 +114,7 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         let newMessageItem = {
           senderId: sender.id,
           receiverId: receiver.id,
-          conversationType: chatGroupModel.conversationTypes.PERSONAL,
+          conversationType: messageModel.conversationTypes.PERSONAL,
           messageType: messageModel.messageTypes.TEXT,
           sender: sender,
           receiver: receiver,
