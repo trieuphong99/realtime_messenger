@@ -75,7 +75,7 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         let getChatGroupReceiver = await chatGroupModel.getChatGroupById(receiverId);
         if(!getChatGroupReceiver) {
           return reject(transError.conversation_not_found);
-        };
+        }
 
         let receiver = {
           id: getChatGroupReceiver._id,
