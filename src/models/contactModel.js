@@ -42,7 +42,7 @@ ContactSchema.statics = {
           {"userId": contactId}
         ]}
       ]
-    })
+    }).exec();
   },
 
   removeContactRequest(userId, contactId) {
@@ -212,5 +212,21 @@ ContactSchema.statics = {
     }).sort({"createdAt": -1}).skip(skipNumber).limit(limit).exec();
   },
 
+  updateWhenNewMessageDelivered(userId, contactId) {
+    return this.update({
+      $or: [
+        {$and: [
+          {"userId": userId},
+          {"contactId": contactId}
+        ]},
+        {$and: [
+          {"contactId": userId},
+          {"userId": contactId}
+        ]}
+      ]
+    }, {
+      "updatedAt": Date.now()
+    }).exec();
+  }
 };
 module.exports = mongoose.model("contact", ContactSchema);

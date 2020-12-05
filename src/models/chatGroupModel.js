@@ -16,7 +16,6 @@ let ChatGroupSchema = new Schema({
 });
 
 ChatGroupSchema.statics = {
-
   /**
    * 
    * @param {string} userId // current user id
@@ -26,6 +25,22 @@ ChatGroupSchema.statics = {
     return this.find({
       "members": {$elemMatch: {"userId": userId}}
     }).sort({"updatedAt": -1}).limit(limit).exec();
+  },
+
+  getChatGroupById(id) {
+    return this.findById(id).exec();
+  },
+
+  /**
+   * 
+   * @param {*} id id of chat group
+   * @param {*} newMessageAmount 
+   */
+  updateWhenNewMessageDelivered(id, newMessageAmount) {
+    return this.findByIdAndUpdate(id, {
+      "messageAmount": newMessageAmount,
+      "updatedAt": Date.now()
+    }).exec();
   }
 }
 

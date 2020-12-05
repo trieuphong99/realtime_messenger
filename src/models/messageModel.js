@@ -25,7 +25,9 @@ let MessageSchema = new Schema({
 });
 
 MessageSchema.statics = {
-
+  createNew(item) {
+    return this.create(item);
+  },
   /**
    * 
    * @param {string} senderId curentUserId
@@ -70,6 +72,6 @@ const MESSAGE_TYPES = {
 
 module.exports = {
   model: mongoose.model("message", MessageSchema),
-  conversatioTypes: MESSAGE_CONVERSATION_TYPES,
+  conversationTypes: MESSAGE_CONVERSATION_TYPES,
   messageTypes: MESSAGE_TYPES
 };
