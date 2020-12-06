@@ -32,9 +32,8 @@ MessageSchema.statics = {
    * 
    * @param {string} senderId curentUserId
    * @param {string} receiverId id of contact
-   * @param {number} limit 
    */
-  getPersonalMessages(senderId, receiverId, limit) {
+  getPersonalMessages(senderId, receiverId) {
     return this.find({
       $or: [
         {$and: [
@@ -46,16 +45,15 @@ MessageSchema.statics = {
           {"receiverId": senderId}
         ]}
       ]
-    }).sort({"createdAt": 1}).limit(limit).exec();
+    }).sort({"createdAt": 1}).exec();
   },
 
   /**
    * 
    * @param {string} receiverId id of chat group
-   * @param {number} limit 
    */
-  getGroupMessages(receiverId, limit) {
-    return this.find({"receiverId": receiverId}).sort({"createdAt": 1}).limit(limit).exec();
+  getGroupMessages(receiverId) {
+    return this.find({"receiverId": receiverId}).sort({"createdAt": 1}).exec();
   },
 };
 
