@@ -14,3 +14,12 @@ export let removeSocketIdFromArray = (clients, userId, socket) => {
   }
   return clients;
 };
+
+export let emitNotifyToArray = (clients, emitId, io, emitResponse, response) => {
+  clients[emitId].forEach((socketId) => {
+    io.sockets.connected[socketId].emit(
+      emitResponse,
+      response
+    );
+  });
+};

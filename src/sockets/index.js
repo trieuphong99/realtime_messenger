@@ -3,6 +3,7 @@ import removeContactRequest from "./contact/removeContactRequest";
 import removeReceivedContactRequest from "./contact/removeReceivedContactRequest";
 import approveReceivedContactRequest from "./contact/approveReceivedContactRequest";
 import deleteContact from "./contact/deleteContact";
+import chatTextEmoji from "./chat/chatTextEmoji";
 
 /**
  * 
@@ -14,6 +15,7 @@ let initSockets = (io) => {
   removeReceivedContactRequest(io);
   approveReceivedContactRequest(io);
   deleteContact(io);
+  chatTextEmoji(io);
 }
 
 module.exports = initSockets;

@@ -27,7 +27,6 @@ let removeContactRequest = (io) => {
     socket.on("disconnect", () => {
       clients = removeSocketIdFromArray(clients, currentUserId, socket);
     });
-    console.log(clients);
   });
 };
 

@@ -7,7 +7,6 @@ import {transError} from "./../../lang/vi";
 import {app} from "./../config/app";
 
 const LIMIT_TAKEN_CONVERSATIONS = 10;
-const LIMIT_TAKEN_MESSAGES = 10;
 
 let getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
@@ -36,10 +35,10 @@ let getAllConversationItems = (currentUserId) => {
       let allConversationsWithMessagesPromise = allConversations.map(async (conversation) => {
         conversation = conversation.toObject();
         if(conversation.members) {
-          let getMessages = await messageModel.model.getGroupMessages(conversation._id, LIMIT_TAKEN_MESSAGES);
+          let getMessages = await messageModel.model.getGroupMessages(conversation._id);
           conversation.messages = getMessages; // create messages field
         } else {
-          let getMessages = await messageModel.model.getPersonalMessages(currentUserId, conversation._id, LIMIT_TAKEN_MESSAGES);
+          let getMessages = await messageModel.model.getPersonalMessages(currentUserId, conversation._id);
           conversation.messages = getMessages; // create messages field
         }
 
