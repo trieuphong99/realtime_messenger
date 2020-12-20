@@ -5,6 +5,7 @@ import messageModel from "./../models/messageModel";
 import _ from "lodash";
 import {transError} from "./../../lang/vi";
 import {app} from "./../config/app";
+import fsExtra from "fs-extra";
 
 const LIMIT_TAKEN_CONVERSATIONS = 10;
 
@@ -133,7 +134,90 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
   });
 };
 
+/**
+ * 
+ * @param {object} sender current user
+ * @param {string} receiverId 
+ * @param {file} messageVal 
+ * @param {boolean} isChatGroup 
+ */
+let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if(isChatGroup) {
+        let getChatGroupReceiver = await chatGroupModel.getChatGroupById(receiverId);
+        if(!getChatGroupReceiver) {
+          return reject(transError.conversation_not_found);
+        }
+
+        let receiver = {
+          id: getChatGroupReceiver._id,
+          name: getChatGroupReceiver.name,
+          avatar: app.chat_group_avatar
+        };
+
+        let imageBuffer = await fsExtra.readFile(messageVal.path);
+        let imageContentType = messageVal.mimetype;
+        let imageName = messageVal.originalname;
+
+        let newMessageItem = {
+          senderId: sender.id,
+          receiverId: receiver.id,
+          conversationType: messageModel.conversationTypes.GROUP,
+          messageType: messageModel.messageTypes.IMAGE,
+          sender: sender,
+          receiver: receiver,
+          file: {data: imageBuffer, contentType: imageContentType, filename: imageName},
+          createdAt: Date.now()
+        };
+
+        let newMessage = await messageModel.model.createNew(newMessageItem);
+
+        // update chat group
+        await chatGroupModel.updateWhenNewMessageDelivered(getChatGroupReceiver._id,
+          getChatGroupReceiver.messageAmount + 1);
+        resolve(newMessage);
+      } else {
+        let getUserReceiver = await userModel.getNormalUserDataById(receiverId);
+        if(!getUserReceiver) {
+          return reject(transError.conversation_not_found);
+        };
+
+        let receiver = {
+          id: getUserReceiver._id,
+          name: getUserReceiver.username,
+          avatar: getUserReceiver.avatar
+        };
+
+        let imageBuffer = await fsExtra.readFile(messageVal.path);
+        let imageContentType = messageVal.mimetype;
+        let imageName = messageVal.originalname;
+
+        let newMessageItem = {
+          senderId: sender.id,
+          receiverId: receiver.id,
+          conversationType: messageModel.conversationTypes.PERSONAL,
+          messageType: messageModel.messageTypes.IMAGE,
+          sender: sender,
+          receiver: receiver,
+          file: {data: imageBuffer, contentType: imageContentType, filename: imageName},
+          createdAt: Date.now()
+        };
+
+        let newMessage = await messageModel.model.createNew(newMessageItem);
+
+        //update contact's date to get it on top of the list of contacts
+        await contactModel.updateWhenNewMessageDelivered(sender.id, getUserReceiver._id);
+        resolve(newMessage);
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getAllConversationItems: getAllConversationItems,
-  addNewTextEmoji: addNewTextEmoji
+  addNewTextEmoji: addNewTextEmoji,
+  addNewImage: addNewImage,
 }

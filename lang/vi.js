@@ -22,7 +22,9 @@ export const transError = {
   avatar_type_error: "File type is not valid, only jpeg, jpg or png allowed",
   avatar_size_error: "File size must be less than 1MB",
   user_current_password_error: "You entered wrong password",
-  conversation_not_found: "Conversation not found"
+  conversation_not_found: "Conversation not found",
+  image_message_type_error: "File type is not valid, only jpeg, jpg or png allowed",
+  image_message_size_error: "File size must be less than 1MB",
 };
 
 export const transSuccess = {
