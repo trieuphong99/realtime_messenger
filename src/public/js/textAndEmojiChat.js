@@ -27,7 +27,7 @@ function textAndEmojiChat(divId) {
 
             // handle message data
             let message = $(
-              `<div class="bubble me data-mess-id="${data.message._id}"></div>`
+              `<div class="bubble me" data-mess-id="${data.message._id}"></div>`
             );
             message.text(data.message.text);
             let convertEmojiMessage = emojione.toImage(message.html());
@@ -83,6 +83,7 @@ function textAndEmojiChat(divId) {
 
             // Emit real-time event
             socket.emit("chat-text-emoji", dataToEmit);
+
           }
         ).fail(function (response) {
           // responseText is initialized in response, console.log(response) to check it out.
@@ -96,12 +97,11 @@ function textAndEmojiChat(divId) {
 $(document).ready(function () {
   // display messages from others
 
-  let divId = "";
-
   // handle message data
   socket.on("chat-text-emoji-response", function (response) {
+    let divId = "";
     let message = $(
-      `<div class="bubble you data-mess-id="${response.message._id}"></div>`
+      `<div class="bubble you" data-mess-id="${response.message._id}"></div>`
     );
     message.text(response.message.text);
     let convertEmojiMessage = emojione.toImage(message.html());
@@ -113,6 +113,10 @@ $(document).ready(function () {
       message.html(`${senderAvatar} ${convertEmojiMessage}`);
 
       divId = response.currentGroupId;
+
+      if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
+        increaseNumberMessageGroup(divId);
+      }
     } else {
       message.html(convertEmojiMessage);
       divId = response.currentUserId;
@@ -128,6 +132,7 @@ $(document).ready(function () {
         .addClass("message-realtime");
     }
 
+    // change data preview and time in leftSide
     $(`.person[data-chat=${divId}]`)
       .find("span.time")
       .html(

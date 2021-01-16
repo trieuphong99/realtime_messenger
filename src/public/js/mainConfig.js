@@ -90,6 +90,8 @@ function gridPhotos(layoutNumber) {
     let href = $(this).attr("href");
     let imageModalId = href.replace("#", "");
     
+    let originDataImage = $(`#${imageModalId}`).find("div.modal-body").html();
+
     let countRows = Math.ceil($(`#${imageModalId}`).find('div.all-images>img').length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
     $(`#${imageModalId}`).find('div.all-images').photosetGrid({
@@ -108,6 +110,11 @@ function gridPhotos(layoutNumber) {
           maxWidth: '90%'
         });
       }
+    });
+
+    // catch closing modal event
+    $(`#${imageModalId}`).on('hidden.bs.modal', function() {
+      $(this).find("div.modal-body").html(originDataImage);
     });
   });
 }
@@ -174,6 +181,9 @@ function changeChatScreen() {
 
     // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
     enableEmojioneArea(divId);
+
+    // bật chức năng tải ảnh, tham số truyền vào là id của box nhập nội dung tin nhắn
+    imageChat(divId);
   });
 }
 
