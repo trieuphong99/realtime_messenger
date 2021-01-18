@@ -25,6 +25,7 @@ export const transError = {
   conversation_not_found: "Conversation not found",
   image_message_type_error: "File type is not valid, only jpeg, jpg or png allowed",
   image_message_size_error: "File size must be less than 1MB",
+  attachment_message_size_error: "File size must be less than 1MB",
 };
 
 export const transSuccess = {

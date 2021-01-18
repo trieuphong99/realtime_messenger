@@ -184,6 +184,9 @@ function changeChatScreen() {
 
     // bật chức năng tải ảnh, tham số truyền vào là id của box nhập nội dung tin nhắn
     imageChat(divId);
+
+    // bật chức năng tải file, tham số truyền vào là id của box nhập nội dung tin nhắn
+    attachmentChat(divId);
   });
 }
 
@@ -194,6 +197,15 @@ function convertEmoji() {
     var converted = emojione.toImage(original);
     $(this).html(converted);
   });
+}
+
+function bufferToBase64(buffer) {
+  return btoa(
+    new Uint8Array(buffer).reduce(
+      (data, byte) => data + String.fromCharCode(byte),
+      ""
+    )
+  );
 }
 
 $(document).ready(function() {

@@ -5,6 +5,7 @@ import approveReceivedContactRequest from "./contact/approveReceivedContactReque
 import deleteContact from "./contact/deleteContact";
 import chatTextEmoji from "./chat/chatTextEmoji";
 import chatImage from "./chat/chatImage";
+import chatAttachment from "./chat/chatAttachment";
 
 /**
  * 
@@ -18,6 +19,7 @@ let initSockets = (io) => {
   deleteContact(io);
   chatTextEmoji(io);
   chatImage(io);
+  chatAttachment(io);
 }
 
 module.exports = initSockets;
