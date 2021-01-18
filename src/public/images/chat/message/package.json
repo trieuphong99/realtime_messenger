@@ -1,0 +1,63 @@
+{
+  "name": "base",
+  "version": "2.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "_moduleAliases": {
+    "$entities": "dist/app/entities",
+    "$migrations": "dist/database/migrations",
+    "$subscribers": "dist/database/subscribers",
+    "$middlewares": "dist/app/middlewares",
+    "$app": "dist/app/http/app",
+    "$cms": "dist/app/http/cms",
+    "$http": "dist/app/http",
+    "$interface": "dist/types/interfaces",
+    "$helpers": "dist/app/helpers",
+    "$enums": "dist/app/enums",
+    "$types": "dist/types"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.161",
+    "@types/socket.io": "^2.1.12",
+    "ajv": "^6.12.2",
+    "await-to-js": "^2.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "log4js": "^6.2.1",
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.1.0",
+    "nodemailer": "^6.4.17",
+    "reflect-metadata": "^0.1.13",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1",
+    "socketio-jwt": "^4.5.0",
+    "string-format": "^2.0.0",
+    "typeorm": "^0.2.26"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/node": "^13.13.9",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.1",
+    "tsc-watch": "^4.2.3",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "server": "node dist/index.js",
+    "start": "rimraf dist && tsc-watch --onSuccess \"node --inspect ./dist/index.js\"",
+    "dev": "rimraf dist && tsc && node --inspect ./dist/index.js",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migrations": "rimraf dist && npm run build && typeorm migration:run"
+  }
+}
