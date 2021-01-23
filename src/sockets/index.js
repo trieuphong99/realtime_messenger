@@ -6,6 +6,7 @@ import deleteContact from "./contact/deleteContact";
 import chatTextEmoji from "./chat/chatTextEmoji";
 import chatImage from "./chat/chatImage";
 import chatAttachment from "./chat/chatAttachment";
+import chatVideo from "./chat/chatVideo";
 
 /**
  * 
@@ -20,6 +21,7 @@ let initSockets = (io) => {
   chatTextEmoji(io);
   chatImage(io);
   chatAttachment(io);
+  chatVideo(io);
 }
 
 module.exports = initSockets;
