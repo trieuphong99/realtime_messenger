@@ -187,6 +187,8 @@ function changeChatScreen() {
 
     // bật chức năng tải file, tham số truyền vào là id của box nhập nội dung tin nhắn
     attachmentChat(divId);
+
+    videoChat(divId);
   });
 }
 
@@ -245,4 +247,7 @@ $(document).ready(function() {
   // click vao phan tu dau tien cua cuoc tro chuyen
   $("ul.people").find("a")[0].click();
 
+  $('#video-chat-group').bind('click', function() {
+    alertify.notify('not available', 'info', 7)
+  });
 });

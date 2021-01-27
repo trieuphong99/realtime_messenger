@@ -11,6 +11,7 @@ import socketio from "socket.io";
 import initSockets from "./sockets/index"
 import configSocketIo from "./config/socketio";
 import cookieParser from "cookie-parser";
+import events from 'events';
 
 // import pem from "pem";
 // import https from "https";
@@ -50,6 +51,8 @@ import cookieParser from "cookie-parser";
 // });
 
 let app = express();
+
+events.EventEmitter.defaultMaxListeners = 20;
 
 /* init server with socket.io & express app */
 let server = http.createServer(app);
