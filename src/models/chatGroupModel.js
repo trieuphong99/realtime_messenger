@@ -16,6 +16,9 @@ let ChatGroupSchema = new Schema({
 });
 
 ChatGroupSchema.statics = {
+  createNew(item) {
+    return this.create(item)
+  },
   /**
    * 
    * @param {string} userId // current user id

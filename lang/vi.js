@@ -9,7 +9,9 @@ export const transValidation = {
   update_phone: "The phone number is not valid in your country",
   update_address: "The address only limits to 10-100 characters",
   keyword_find_user: "You've entered wrong format of keyword, only accept number, syllable and space",
-  incorrect_message_text_emoji: "Invalid message, make sure you enter at least 1 or 100 characters as maximum"
+  incorrect_message_text_emoji: "Invalid message, make sure you enter at least 1 or 100 characters as maximum",
+  add_new_group_users_incorrect: "please add your friends, at least 2 people",
+  add_new_group_name_incorrect: "group name length is not valid",
 };
 
 export const transError = {

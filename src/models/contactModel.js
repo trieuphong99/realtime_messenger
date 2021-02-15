@@ -96,6 +96,22 @@ ContactSchema.statics = {
   },
 
   /**
+   * get all user's friends
+   * @param {string} userId 
+   */
+  getFriends(userId) {
+    return this.find({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true}
+      ]
+    }).sort({"updatedAt": -1}).exec();
+  },
+
+  /**
    * get contacts that user sent
    * @param {string} userId 
    * @param {number} limit 
