@@ -8,53 +8,54 @@ import request from "request";
 
 let getICETurnServer = () => {
   return new Promise(async (resolve, reject) => {
-    // Node Get ICE STUN and TURN list
-    let o = {
-      format: "urls",
-    };
+    // // Node Get ICE STUN and TURN list
+    // let o = {
+    //   format: "urls",
+    // };
 
-    let bodyString = JSON.stringify(o);
-    let options = {
-      url: "https://global.xirsys.net/_turn/app-trieu-phong",
-      // host: "global.xirsys.net",
-      // path: "/_turn/app-trieu-phong",
-      method: "PUT",
-      headers: {
-        Authorization:
-          "Basic " +
-          Buffer.from(
-            "trieuphong99:90ad7622-647d-11eb-9b27-0242ac150003"
-          ).toString("base64"),
-        "Content-Type": "application/json",
-        "Content-Length": bodyString.length,
-      },
-    };
+    // let bodyString = JSON.stringify(o);
+    // let options = {
+    //   url: "https://global.xirsys.net/_turn/app-trieu-phong",
+    //   // host: "global.xirsys.net",
+    //   // path: "/_turn/app-trieu-phong",
+    //   method: "PUT",
+    //   headers: {
+    //     Authorization:
+    //       "Basic " +
+    //       Buffer.from(
+    //         "trieuphong99:90ad7622-647d-11eb-9b27-0242ac150003"
+    //       ).toString("base64"),
+    //     "Content-Type": "application/json",
+    //     "Content-Length": bodyString.length,
+    //   },
+    // };
 
-    // call a request to get ICE list of turn server
-    request(options, function(error, response, body) {
-      if (error) {
-        return reject(error);
-      }
-      let bodyJson = JSON.parse(body);
-      resolve(bodyJson.v.iceServers);
-    });
+    // // call a request to get ICE list of turn server
+    // request(options, function(error, response, body) {
+    //   if (error) {
+    //     return reject(error);
+    //   }
+    //   let bodyJson = JSON.parse(body);
+    //   resolve(bodyJson.v.iceServers);
+    // });
 
-    let httpreq = https.request(options, function (httpres) {
-      let str = "";
-      httpres.on("data", function (data) {
-        str += data;
-      });
-      httpres.on("error", function (e) {
-        console.log("error: ", e);
-      });
-      httpres.on("end", function () {
-        console.log("ICE List: ", str);
-      });
-    });
-    httpreq.on("error", function (e) {
-      console.log("request error: ", e);
-    });
-    httpreq.end();
+    // let httpreq = https.request(options, function (httpres) {
+    //   let str = "";
+    //   httpres.on("data", function (data) {
+    //     str += data;
+    //   });
+    //   httpres.on("error", function (e) {
+    //     console.log("error: ", e);
+    //   });
+    //   httpres.on("end", function () {
+    //     console.log("ICE List: ", str);
+    //   });
+    // });
+    // httpreq.on("error", function (e) {
+    //   console.log("request error: ", e);
+    // });
+    // httpreq.end();
+    resolve([]);
   });
 };
 
