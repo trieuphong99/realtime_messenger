@@ -7,6 +7,7 @@ import chatTextEmoji from "./chat/chatTextEmoji";
 import chatImage from "./chat/chatImage";
 import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
+import userOnlineOffline from "./status/userOnlineOffline";
 
 /**
  * 
@@ -22,6 +23,7 @@ let initSockets = (io) => {
   chatImage(io);
   chatAttachment(io);
   chatVideo(io);
+  userOnlineOffline(io);
 }
 
 module.exports = initSockets;
