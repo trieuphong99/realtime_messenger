@@ -145,6 +145,15 @@ let chatVideo = (io) => {
       }
     });
 
+    // new created group chat
+    socket.on("new-created-group", (data) => {
+      clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id);
+    });
+
+    socket.on("member-joined-group-chat", (data) => {
+      clients = pushSocketIdToArray(clients, data.groupChatId, socket.id);
+    });
+
     // remove socket id once socket is disconnected
     socket.on("disconnect", () => {
       clients = removeSocketIdFromArray(clients, currentUserId, socket);

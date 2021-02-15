@@ -1,6 +1,6 @@
 import {
-  emitNotifyToArray,
   pushSocketIdToArray,
+  emitNotifyToArray,
   removeSocketIdFromArray,
 } from "./../../helpers/socketHelper";
 /**
@@ -8,7 +8,7 @@ import {
  * @param io from socket.io library
  */
 
-let chatTextEmoji = (io) => {
+let newGroupChat = (io) => {
   let clients = {};
   io.on("connection", (socket) => {
     // push socket id to clients' user id
@@ -19,47 +19,24 @@ let chatTextEmoji = (io) => {
       clients = pushSocketIdToArray(clients, group._id, socket.id);
     });
 
-    socket.on("chat-text-emoji", (data) => {
-      // "chat-text-emoji" event, data(contactId) is from addContact.js script
-      if (data.groupId) {
-        let response = {
-          currentGroupId: data.groupId,
-          currentUserId: socket.request.user._id,
-          message: data.message,
-        };
-
-        if (clients[data.groupId]) {
-          emitNotifyToArray(
-            clients,
-            data.groupId,
-            io,
-            "chat-text-emoji-response",
-            response
-          );
-        }
-      }
-
-      if (data.contactId) {
-        let response = {
-          currentUserId: socket.request.user._id,
-          message: data.message,
-        };
-
-        if (clients[data.contactId]) {
-          emitNotifyToArray(
-            clients,
-            data.contactId,
-            io,
-            "chat-text-emoji-response",
-            response
-          );
-        }
-      }
-    });
-
-    // new created group chat
     socket.on("new-created-group", (data) => {
       clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id);
+
+      let response = {
+        groupChat: data.groupChat,
+      };
+
+      data.groupChat.members.forEach((member) => {
+        if (clients[member.userId] && member.userId != currentUserId) {
+          emitNotifyToArray(
+            clients,
+            member.userId,
+            io,
+            "new-created-group-response",
+            response
+          );
+        }
+      });
     });
 
     socket.on("member-joined-group-chat", (data) => {
@@ -72,8 +49,10 @@ let chatTextEmoji = (io) => {
       socket.request.user.chatGroupIds.forEach((group) => {
         clients = removeSocketIdFromArray(clients, group._id, socket);
       });
+      // step 03: emit to other users when an user offline
+      socket.broadcast.emit("server-send-when-an-user-offline", currentUserId);
     });
   });
 };
 
-module.exports = chatTextEmoji;
+module.exports = newGroupChat;

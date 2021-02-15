@@ -97,6 +97,26 @@ UserSchema.statics = {
         ]}
       ]
     }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+  },
+
+  /**
+   * find all users to add to group chat
+   * @param {array} friendIds 
+   * @param {string} keyword 
+   */
+  findAllToAddGroupChat(friendIds, keyword) {
+    return this.find({
+      $and: [
+        {"_id": {$in: friendIds}}, // find all ids which not include deprectedUserIds
+        {"local.isActive": true},
+        {$or: [
+          {"username": {"$regex": new RegExp(keyword, "i") }}, // $regex: mongoose's syntax, this line is finding username which is closet to the keyword
+          {"local.email": {"$regex": new RegExp(keyword, "i")}},
+          {"facebook.email": {"$regex": new RegExp(keyword, "i")}},
+          {"google.email": {"$regex": new RegExp(keyword, "i")}},
+        ]}
+      ]
+    }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
   }
 };
 
