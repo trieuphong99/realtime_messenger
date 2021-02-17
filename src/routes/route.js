@@ -152,6 +152,11 @@ let initRoutes = (app) => {
     auth.checkLoggedin,
     message.readMoreAllChat
   );
+  router.get(
+    "/message/read-more",
+    auth.checkLoggedin,
+    message.readMoreMessages
+  );
 
   router.get(
     "/contact/search-friends/:keyword",
