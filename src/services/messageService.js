@@ -7,7 +7,7 @@ import { transError } from "./../../lang/vi";
 import { app } from "./../config/app";
 import fsExtra from "fs-extra";
 
-const LIMIT_TAKEN_CONVERSATIONS = 10;
+const LIMIT_TAKEN_CONVERSATIONS = 1;
 
 let getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
@@ -357,9 +357,91 @@ let addNewAttachment = (sender, receiverId, messageVal, isChatGroup) => {
   });
 };
 
+/**
+ * read more personal and group chat
+ * @param {string} currentUserId
+ * @param {number} skipPersonal
+ * @param {number} skipGroup
+ */
+let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await contactModel.readMoreContacts(
+        currentUserId,
+        skipPersonal,
+        LIMIT_TAKEN_CONVERSATIONS
+      );
+
+      let listUsers = contacts.map(async (contact) => {
+        if (contact.contactId == currentUserId) {
+          let getUserByContact = await userModel.getNormalUserDataById(
+            contact.userId
+          );
+          getUserByContact.updatedAt = contact.updatedAt; // two variables have the same type 'Object'
+          return getUserByContact;
+        } else {
+          let getUserByContact = await userModel.getNormalUserDataById(
+            contact.contactId
+          );
+          getUserByContact.updatedAt = contact.updatedAt;
+          return getUserByContact;
+        }
+      });
+
+      let userConversations = await Promise.all(listUsers);
+      let groupConversations = await chatGroupModel.readMoreChatGroups(
+        currentUserId,
+        skipGroup,
+        LIMIT_TAKEN_CONVERSATIONS
+      );
+      let allConversations = userConversations.concat(groupConversations);
+
+      allConversations = _.sortBy(allConversations, (item) => {
+        return -item.updatedAt;
+      });
+
+      let allConversationsWithMessagesPromise = allConversations.map(
+        async (conversation) => {
+          conversation = conversation.toObject();
+          if (conversation.members) {
+            let getMessages = await messageModel.model.getGroupMessages(
+              conversation._id
+            );
+            conversation.messages = getMessages; // create messages field
+          } else {
+            let getMessages = await messageModel.model.getPersonalMessages(
+              currentUserId,
+              conversation._id
+            );
+            conversation.messages = getMessages; // create messages field
+          }
+
+          return conversation;
+        }
+      );
+
+      let allConversationsWithMessages = await Promise.all(
+        allConversationsWithMessagesPromise
+      );
+      // descending sort by updatedAt
+      allConversationsWithMessages = _.sortBy(
+        allConversationsWithMessages,
+        (item) => {
+          return -item.updatedAt;
+        }
+      );
+
+      resolve(allConversationsWithMessages);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getAllConversationItems: getAllConversationItems,
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
   addNewAttachment: addNewAttachment,
+  readMoreAllChat: readMoreAllChat,
 };

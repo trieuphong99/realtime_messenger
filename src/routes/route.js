@@ -147,6 +147,11 @@ let initRoutes = (app) => {
     auth.checkLoggedin,
     message.addNewAttachment
   );
+  router.get(
+    "/message/read-more-all-chat",
+    auth.checkLoggedin,
+    message.readMoreAllChat
+  );
 
   router.get(
     "/contact/search-friends/:keyword",
