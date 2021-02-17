@@ -8,6 +8,7 @@ import { app } from "./../config/app";
 import fsExtra from "fs-extra";
 
 const LIMIT_TAKEN_CONVERSATIONS = 1;
+const LIMIT_TAKEN_MESSAGES = 30;
 
 let getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
@@ -48,13 +49,15 @@ let getAllConversationItems = (currentUserId) => {
           conversation = conversation.toObject();
           if (conversation.members) {
             let getMessages = await messageModel.model.getGroupMessages(
-              conversation._id
+              conversation._id,
+              LIMIT_TAKEN_MESSAGES
             );
             conversation.messages = getMessages; // create messages field
           } else {
             let getMessages = await messageModel.model.getPersonalMessages(
               currentUserId,
-              conversation._id
+              conversation._id,
+              LIMIT_TAKEN_MESSAGES
             );
             conversation.messages = getMessages; // create messages field
           }
@@ -405,13 +408,15 @@ let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
           conversation = conversation.toObject();
           if (conversation.members) {
             let getMessages = await messageModel.model.getGroupMessages(
-              conversation._id
+              conversation._id,
+              LIMIT_TAKEN_MESSAGES
             );
             conversation.messages = getMessages; // create messages field
           } else {
             let getMessages = await messageModel.model.getPersonalMessages(
               currentUserId,
-              conversation._id
+              conversation._id,
+              LIMIT_TAKEN_MESSAGES
             );
             conversation.messages = getMessages; // create messages field
           }
@@ -438,10 +443,45 @@ let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
   });
 };
 
+/**
+ * read more messages
+ * @param {string} currentUserId
+ * @param {number} skipMessage
+ * @param {string} targetId
+ * @param {boolean} chatInGroup
+ */
+let readMoreMessages = (currentUserId, skipMessage, targetId, chatInGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (chatInGroup) {
+        let getMessages = await messageModel.model.readMoreGroupMessages(
+          targetId,
+          skipMessage,
+          LIMIT_TAKEN_MESSAGES
+        );
+        getMessages = _.reverse(getMessages); // create messages field
+        return resolve(getMessages);
+      } else {
+        let getMessages = await messageModel.model.readMorePersonalMessages(
+          currentUserId,
+          targetId,
+          skipMessage,
+          LIMIT_TAKEN_MESSAGES
+        );
+        getMessages = _.reverse(getMessages); // create messages field
+        return resolve(getMessages);
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getAllConversationItems: getAllConversationItems,
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
   addNewAttachment: addNewAttachment,
   readMoreAllChat: readMoreAllChat,
+  readMoreMessages: readMoreMessages,
 };
