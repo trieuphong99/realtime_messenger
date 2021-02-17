@@ -211,7 +211,9 @@ $(document).ready(function() {
   convertEmoji();
 
   // click vao phan tu dau tien cua cuoc tro chuyen
-  $("ul.people").find("a")[0].click();
+  if($("ul.people").find("a").length) {
+    $("ul.people").find("a")[0].click();
+  }
 
   $('#video-chat-group').bind('click', function() {
     alertify.notify('not available', 'info', 7)
