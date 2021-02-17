@@ -1,0 +1,70 @@
+<% newAllConversations.forEach(function(conversation) { %>
+  <% if(conversation.members) { %>
+      <a href="#uid_<%= conversation._id %>" class="room-chat" data-target="#to_<%= conversation._id %>">
+          <li class="person group-chat" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                  <!-- <div class="dot"></div> -->
+                  <img src="images/users/group-avatar-trungquandev.png" alt="">
+              </div>
+              <span class="name">
+                  <span class="group-chat-name">Group:</span>
+                   <% if(conversation.name.length > 15) { %>
+                          <%= conversation.name.substr(0, 11) %><span>...</span>
+                   <% } else { %>
+                          <%= conversation.name %>
+                   <% } %>   
+              </span>
+              <span class="time">
+                  <%= convertTimeStampToRealTime(lastItemOfArray(conversation.messages).createdAt) %>
+              </span>
+              <span class="preview convert-emoji">
+                  <% if(lastItemOfArray(conversation.messages).messageType === "text") { %>
+                      <%= lastItemOfArray(conversation.messages).text %> 
+                  <% } %>
+                  <!-- the text already substr-ed by the class='preview convert-emoji' in style.css-->
+
+                  <% if(lastItemOfArray(conversation.messages).messageType === "image") { %>
+                      You've got an image
+                  <% } %>
+
+                  <% if(lastItemOfArray(conversation.messages).messageType === "file") { %>
+                      You've got a file 
+                  <% } %>
+              </span>
+          </li>
+      </a>
+  <% } else { %>
+      <a href="#uid_<%= conversation._id %>" class="room-chat" data-target="#to_<%= conversation._id %>">
+          <li class="person" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                  <div class="dot"></div>
+                  <img src="images/users/<%= conversation.avatar %>" alt="">
+              </div>
+              <span class="name">
+                  <% if(conversation.username.length > 15) { %>
+                      <%= conversation.username.substr(0, 11) %><span>...</span>
+                  <% } else { %>
+                      <%= conversation.username %>
+                  <% } %>   
+              </span>
+              <span class="time">
+                  <%= convertTimeStampToRealTime(lastItemOfArray(conversation.messages).createdAt) %>
+              </span>
+              <span class="preview convert-emoji">
+                  <% if(lastItemOfArray(conversation.messages).messageType === "text") { %>
+                      <%= lastItemOfArray(conversation.messages).text %> 
+                  <% } %>
+                  <!-- the text already substr-ed by the class='preview convert-emoji' in style.css-->
+
+                  <% if(lastItemOfArray(conversation.messages).messageType === "image") { %>
+                      You've got an image
+                  <% } %>
+
+                  <% if(lastItemOfArray(conversation.messages).messageType === "file") { %>
+                      You've got a file 
+                  <% } %>
+              </span>
+          </li>
+      </a>
+  <% } %>
+<% }); %>

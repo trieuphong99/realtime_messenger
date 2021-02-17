@@ -202,7 +202,7 @@ function callCreateGroupChat() {
                     </div>
                 </div>
               </div>`;
-            $("#screen-chat").prepend(rightSideData);
+            $("#chat-screen").prepend(rightSideData);
 
             // step 04: call function changeScreenChat
             changeChatScreen();
@@ -356,7 +356,7 @@ $(document).ready(function () {
             </div>
         </div>
       </div>`;
-    $("#screen-chat").prepend(rightSideData);
+    $("#chat-screen").prepend(rightSideData);
 
     // step 04: call function changeScreenChat
     changeChatScreen();
